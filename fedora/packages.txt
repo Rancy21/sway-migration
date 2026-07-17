@@ -161,7 +161,7 @@ acpi
 # ================================
 # POLKIT AND AUTH
 # ================================
-polkit-gnome
+lxpolkit  # Lightweight polkit agent for Wayland (LXDE policykit)
 
 # ================================
 # BACKUP

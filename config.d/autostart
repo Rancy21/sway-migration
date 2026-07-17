@@ -40,10 +40,17 @@ exec_always pkill -x -q -9 walker; exec walker --gapplication-service
 # ================================
 
 # Polkit agent for GUI authentication
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+# Recommended for Fedora: lxpolkit (lightweight, works well with Sway)
+exec lxpolkit
 
-# Alternative: lxqt-policykit-agent
-# exec lxqt-policykit-agent
+# Alternative: mate-polkit
+# exec /usr/libexec/polkit-mate-authentication-agent-1
+
+# Alternative: xfce-polkit
+# exec /usr/libexec/xfce-polkit
+
+# Alternative: polkit-kde-agent (if you use KDE apps)
+# exec /usr/libexec/polkit-kde-authentication-agent-1
 
 # ================================
 # IDLE MANAGEMENT

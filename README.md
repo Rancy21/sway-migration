@@ -125,7 +125,7 @@ These Omarchy-specific tools won't work on Fedora:
 sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
 
 # 2. Install Sway and tools
-sudo dnf install @sway waybar grim slurp wl-clipboard mako wofi brightnessctl pamixer
+sudo dnf install @sway waybar grim slurp wl-clipboard mako wofi brightnessctl pamixer lxpolkit
 
 # 3. Install this config
 mkdir -p ~/.config/sway
@@ -140,6 +140,8 @@ cp waybar/style.css ~/.config/waybar/
 # 5. Test
 sway
 ```
+
+**Note**: `polkit-gnome` is not available on Fedora. This config uses `lxpolkit` instead, which is lightweight and works well with Sway.
 
 ## Omarchy Commands → Fedora Alternatives
 

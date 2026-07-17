@@ -273,6 +273,9 @@ dnf history
 | `abstract` | Layered packages (Silverblue) | Pre-installed on Silverblue |
 | `firewalld` | Firewall | Pre-installed |
 | `selinux` | Security | Pre-installed |
+| `lxpolkit` | Polkit authentication agent | `sudo dnf install lxpolkit` |
+
+**Note**: `polkit-gnome` is not available on Fedora. Use `lxpolkit` for GUI authentication dialogs.
 
 ## Default Values
 

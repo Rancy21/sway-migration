@@ -157,7 +157,7 @@ Complete checklist for migrating from Omarchy/Hyprland to Fedora + Sway.
 #### Network Tools
 - [ ] Install network tools
   ```bash
-  sudo dnf install network-manager-applet blueberry
+  sudo dnf install network-manager-applet blueberry lxpolkit
   ```
 
 ## Phase 5: Deploy Configuration

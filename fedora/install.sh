@@ -136,7 +136,7 @@ install_utilities() {
         ripgrep \
         fd-find \
         bat \
-        exa \
+        eza \
         neofetch \
         fastfetch \
         lm_sensors \
@@ -277,9 +277,11 @@ configure_network() {
     sudo dnf install -y \
         network-manager-applet \
         NetworkManager-wifi \
-        blueberry
+        blueberry \
+        lxpolkit
 
     echo -e "${GREEN}✓ Network tools installed${NC}"
+    echo -e "${YELLOW}Note: Using lxpolkit (lightweight polkit agent)${NC}"
 }
 
 # Configure power management (laptop)

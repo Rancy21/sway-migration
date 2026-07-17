@@ -192,9 +192,11 @@ sudo dnf install nautilus thunar gvfs
 # Browsers
 sudo dnf install firefox chromium
 
-# Network
-sudo dnf install network-manager-applet blueberry
+# Network and Polkit
+sudo dnf install network-manager-applet blueberry lxpolkit
 ```
+
+**Note**: `polkit-gnome` is not available on Fedora. Use `lxpolkit` instead - it's lightweight and works perfectly with Sway.
 
 ### 4.3 Enable Flathub
 
@@ -335,9 +337,11 @@ Edit `~/.config/sway/config.d/autostart` to enable:
 
 - Waybar
 - Mako notifications
-- Polkit agent
+- Polkit agent (lxqt-policykit-agent)
 - Network applet
 - Bluetooth applet
+
+**Important**: Use `lxqt-policykit-agent` on Fedora. The config already includes this, but verify it's uncommented.
 
 ### 7.3 Theme Setup
 
@@ -507,6 +511,25 @@ sudo dnf install akmod-nvidia
 
 # Check Sway performance
 swaymsg -t get_outputs
+```
+
+### 9.5 Polkit Authentication Issues
+
+If you get "Authentication failed" or no password prompt when running GUI apps:
+
+```bash
+# Install polkit agent
+sudo dnf install lxpolkit
+
+# Run it manually to test
+lxpolkit &
+
+# Add to autostart in ~/.config/sway/config.d/autostart:
+# exec lxpolkit
+
+# Other alternatives if lxpolkit doesn't work:
+# - mate-polkit: sudo dnf install mate-polkit
+# - xfce-polkit: sudo dnf install xfce-polkit
 ```
 
 ## Phase 10: Post-Migration
