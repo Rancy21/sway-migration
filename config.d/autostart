@@ -1,0 +1,209 @@
+# Autostart Applications
+# Migrated from Omarchy/Hyprland autostart.conf
+
+# ================================
+# STATUS BAR
+# ================================
+
+# Start Waybar (status bar)
+exec_always pkill -x -q -9 waybar; exec waybar
+
+# Alternative: Use sway's built-in bar
+# bar {
+#     position top
+#     status_command i3status
+# }
+
+# ================================
+# NOTIFICATIONS
+# ================================
+
+# Mako notification daemon
+exec mako
+
+# Alternative: makoctl control
+# exec_always makoctl set-mode default
+
+# ================================
+# APP LAUNCHER
+# ================================
+
+# Walker launcher daemon (like Omarchy menu)
+exec_always pkill -x -q -9 walker; exec walker --gapplication-service
+
+# Alternative launchers:
+# exec ulauncher --hide-window
+# exec wofi --show drun
+
+# ================================
+# POLKIT AUTHENTICATION
+# ================================
+
+# Polkit agent for GUI authentication
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+# Alternative: lxqt-policykit-agent
+# exec lxqt-policykit-agent
+
+# ================================
+# IDLE MANAGEMENT
+# ================================
+
+# Idle daemon (screen lock, sleep, etc.)
+# exec swayidle -w \
+#     timeout 300 'swaylock -f -c 1e1e2e' \
+#     timeout 600 'swaymsg "output * power off"' \
+#     resume 'swaymsg "output * power on"' \
+#     before-sleep 'swaylock -f -c 1e1e2e'
+
+# More complex example with notifications
+# exec swayidle -w \
+#     timeout 240 'notify-send "Locking in 60 seconds"' \
+#     timeout 300 'swaylock -f -c 1e1e2e' \
+#     timeout 600 'swaymsg "output * power off"' \
+#     resume 'swaymsg "output * power on"'
+
+# ================================
+# SCREEN COLOR TEMPERATURE
+# ================================
+
+# Redshift/night light (alternative to hyprsunset)
+# exec redshift -l 37.7749:-122.4194 -t 6500:3500
+
+# Alternative: gammastep
+# exec gammastep -l 37.7749:-122.4194
+
+# Or use wlsunset:
+# exec wlsunset -l 37.7749 -L 122.4194
+
+# ================================
+# WALLPAPER
+# ================================
+
+# Random wallpaper from directory
+# exec_always find ~/Pictures/Wallpapers -type f | shuf -n 1 | xargs swaymsg output '*' bg
+
+# Use feh for dynamic wallpapers (requires feh)
+# exec_always feh --randomize --bg-fill ~/Pictures/Wallpapers
+
+# ================================
+# CLIPBOARD MANAGER
+# ================================
+
+# Clipboard manager (cliphist + wl-clipboard)
+exec wl-paste --type text --watch cliphist store
+exec wl-paste --type image --watch cliphist store
+
+# ================================
+# INPUT METHOD
+# ================================
+
+# Fcitx5 for CJK input
+# exec fcitx5 -d --replace
+
+# IBus
+# exec ibus-daemon -drx
+
+# ================================
+# DATABASES/SERVICES
+# ================================
+
+# Start databases if needed
+# exec uwsm-app -- my-service
+
+# ================================
+# BLUELIGHT FILTER (FROM OMARCHY)
+# ================================
+
+# Night light (toggle with omarchy toggle nightlight)
+# In Sway, use wlsunset or gammastep
+
+# ================================
+# SCREEN RECORDER INDICATOR
+# ================================
+
+# If you use screen recording features
+# Might need custom script for Sway
+
+# ================================
+# MUSIC PLAYER
+# ================================
+
+# Spotify (if using)
+# exec omarchy-launch-or-focus spotify
+
+# MPD (Music Player Daemon)
+# exec mpd
+
+# ================================
+# NETWORK
+# ================================
+
+# Network Manager applet
+# exec nm-applet --indicator
+
+# ================================
+# BLUETOOTH
+# ================================
+
+# Blueman applet
+# exec blueman-applet
+
+# ================================
+| POWER MANAGEMENT
+# ================================
+
+# TLP (laptop power management)
+# exec tlp start
+
+# ================================
+# DAEMON SERVICES
+# ================================
+
+# D-Bus activation
+# exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
+
+# ================================
+# ENVIRONMENT VARIABLES
+# ================================
+
+# Set environment for Qt/GTK applications
+exec_always systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
+
+# ================================
+# TOUCHPAD GESTURES
+# ================================
+
+# libinput-gestures (workspace switching)
+# exec_always libinput-gestures-setup start
+
+# fusuma (advanced gestures)
+# exec_always fusuma -d
+
+# ================================
+| CUSTOM SCRIPTS
+# ================================
+
+# Run any custom startup scripts
+# exec ~/bin/startup.sh
+
+# ================================
+# MONITOR SPECIFIC AUTOSTART
+# ================================
+
+# Run apps on specific monitors (use for_window rules instead)
+# See config.d/rules for window rules
+
+# ================================
+# DELAYED STARTS
+# ================================
+
+# Start apps after a delay
+# exec sleep 5 && some-app
+
+# ================================
+# CONDITIONAL STARTS
+# ================================
+
+# Check if specific programs are installed before running
+# exec command -v some-app >/dev/null && some-app

@@ -1,0 +1,163 @@
+# Input Configuration
+# Keyboard, mouse, and touchpad settings
+# Migrated from Omarchy/Hyprland
+
+# ================================
+# KEYBOARD SETTINGS
+# ================================
+
+input type:keyboard {
+    # Keyboard layout
+    xkb_layout us
+    # xkb_variant ,nodeadkeys
+    # xkb_model pc104
+
+    # NumLock on by default
+    xkb_numlock enabled
+
+    # Repeat rate (for holding keys)
+    repeat_delay 300
+    repeat_rate 50
+
+    # Caps Lock behavior
+    # xkb_options caps:escape        # Map Caps Lock to Escape
+    # xkb_options caps:ctrl_modifier # Map Caps Lock to Ctrl
+}
+
+# Keyboard-specific settings (example)
+# input 1:1:AT_Translated_Set_2_keyboard {
+#     xkb_layout us,de
+#     xkb_options grp:alt_shift_toggle
+# }
+
+# ================================
+# TOUCHPAD SETTINGS
+# ================================
+
+input type:touchpad {
+    # Tap to click
+    tap enabled
+
+    # Natural scrolling (like macOS)
+    natural_scroll enabled
+
+    # Disable while typing
+    dwt enabled
+
+    # Click method
+    click_method clickfinger
+
+    # Middle click emulation
+    middle_emulation enabled
+
+    # Scroll factor (speed)
+    scroll_factor 1.0
+
+    # Tap-and-drag
+    tap_drag enabled
+
+    # Disable tap-to-select
+    # tap_button_map lrm
+}
+
+# Touchpad-specific settings (example - use swaymsg -t get_inputs to find device name)
+# input 2:14:ETPS/2_Elantech_Touchpad {
+#     dwt enabled
+#     tap enabled
+#     natural_scroll enabled
+#     scroll_factor 0.5
+# }
+
+# ================================
+# MOUSE SETTINGS
+# ================================
+
+input type:pointer {
+    # Acceleration
+    accel_profile adaptive
+
+    # Pointer speed (-1.0 to 1.0)
+    pointer_accel 0.0
+
+    # Natural scrolling for mouse (usually off)
+    natural_scroll disabled
+
+    # Scroll factor
+    scroll_factor 1.0
+
+    # Middle button emulation (2-button mouse)
+    middle_emulation disabled
+
+    # Left-handed mode
+    left_handed disabled
+}
+
+# Mouse-specific settings (example)
+# input 1133:4122:Logitech_G305 {
+#     pointer_accel -0.3
+#     accel_profile flat
+# }
+
+# ================================
+# TRACKBALL SETTINGS
+# ================================
+
+# input type:trackball {
+#     scroll_method on_button_down
+#     scroll_button BTN_SIDE
+#     natural_scroll enabled
+# }
+
+# ================================
+# INPUT METHOD EDITOR (IME)
+# ================================
+
+# If using CJK input or other IME
+# exec fcitx5 -d --replace
+# exec ibus-daemon -drx
+
+# ================================
+# GESTURES (Limited support in Sway)
+# ================================
+
+# Sway has limited gesture support compared to Hyprland
+# Hyprland's gesture = 3, horizontal, workspace, e 5
+# would need to be handled by a gesture daemon like libinput-gestures
+
+# Example with libinput-gestures:
+# exec_always libinput-gestures-setup start
+
+# Or use fusuma:
+# exec_always fusuma -d
+
+# ================================
+# SEAT CONFIGURATION
+# ================================
+
+# Cursor theme
+seat seat0 xcursor_theme Adwaita 24
+
+# Cursor hiding after timeout (milliseconds)
+# seat seat0 hide_cursor 5000
+
+# ================================
+# BINDINGS MODES FOR INPUT
+# ================================
+
+# Keyboard layout switcher mode
+set $mode_layout Keyboard layout
+mode "$mode_layout" {
+    bindsym 1 input type:keyboard xkb_layout us; mode "default"
+    bindsym 2 input type:keyboard xkb_layout de; mode "default"
+    bindsym 3 input type:keyboard xkb_layout fr; mode "default"
+    bindsym Escape mode "default"
+}
+# bindsym $mod+Shift+k mode "$mode_layout"
+
+# Touchpad toggle mode
+set $mode_touchpad Touchpad
+mode "$mode_touchpad" {
+    bindsym t input type:touchpad events toggle enabled disabled; mode "default"
+    bindsym Escape mode "default"
+}
+# bindsym $mod+Ctrl+t mode "$mode_touchpad"

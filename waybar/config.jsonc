@@ -1,0 +1,178 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "spacing": 0,
+  "height": 26,
+  "modules-left": ["custom/omarchy", "sway/workspaces", "cpu"],
+  "modules-center": ["clock", "custom/weather", "custom/update", "custom/voxtype", "custom/screenrecording-indicator", "custom/idle-indicator", "custom/notification-silencing-indicator"],
+  "modules-right": [
+    "group/tray-expander",
+    "bluetooth",
+    "network",
+    "pulseaudio",
+    "battery"
+  ],
+
+  // CHANGED: hyprland/workspaces -> sway/workspaces
+  "sway/workspaces": {
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "urgent": "",
+      "focused": "",
+      "default": ""
+    }
+  },
+
+  "custom/omarchy": {
+    "format": "<span font='omarchy'></span>",
+    "on-click": "walker",
+    "on-click-right": "xdg-terminal-exec",
+    "tooltip-format": "App Launcher\n\nSuper + Space"
+  },
+
+  "custom/update": {
+    "format": "",
+    "exec": "checkupdates | wc -l | awk '{if($1>0) print \"\"; else print \"\"}'",
+    "on-click": "xdg-terminal-exec -- sudo pacman -Syu",
+    "tooltip-format": "Updates available",
+    "signal": 7,
+    "interval": 21600
+  },
+
+  "cpu": {
+    "interval": 2,
+    "format": "  {icon0}{icon1}{icon2}{icon3} {usage:>2}%",
+    "format-icons": ["▁", "▂", "▃", "▄", "▅", "▆", "▇", "█"],
+    "on-click": "xdg-terminal-exec -- btop"
+  },
+
+  "clock": {
+    "format": "{:%H:%M  -  %A, %d}",
+    "format-alt": "{:L%d %B W%V %Y}",
+    "tooltip": false,
+    "on-click-right": "xdg-terminal-exec -- tty-clock -c"
+  },
+
+  "custom/weather": {
+    "exec": "curl -s 'wttr.in?format=%c+%t&period=60' || echo ''",
+    "return-type": "json",
+    "interval": 60,
+    "tooltip": false
+  },
+
+  "network": {
+    "format-icons": ["", "", "", "", ""],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "",
+    "format-disconnected": "",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)",
+    "tooltip-format-ethernet": "Connected",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "nm-connection-editor"
+  },
+
+  "battery": {
+    "format": "{icon}  {capacity}%",
+    "format-full": "{icon}  {capacity}%",
+    "format-charging": " {capacity}%",
+    "format-plugged": " {capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format-discharging": "{power:>1.0f}W↓ {capacity}%",
+    "tooltip-format-charging": "{power:>1.0f}W↑ {capacity}%",
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    }
+  },
+
+  "bluetooth": {
+    "format": "",
+    "format-disabled": "",
+    "format-connected": "",
+    "format-no-controller": "",
+    "tooltip-format": "Devices connected: {num_connections}",
+    "on-click": "blueman-manager"
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "on-click": "pavucontrol",
+    "on-click-right": "pamixer -t",
+    "tooltip-format": "Volume: {volume}%",
+    "scroll-step": 5,
+    "format-muted": "",
+    "format-icons": {
+      "headphone": "",
+      "headset": "",
+      "default": ["", "", ""]
+    }
+  },
+
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": ["custom/expand-icon", "tray"]
+  },
+
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+
+  "custom/screenrecording-indicator": {
+    "on-click": "notify-send 'Screen Recording' 'Not configured yet'",
+    "exec": "echo '{\"icon\": \"\", \"class\": \"inactive\"}'",
+    "signal": 8,
+    "return-type": "json"
+  },
+
+  "custom/voxtype": {
+    "exec": "echo '{\"icon\": \"\", \"class\": \"idle\"}'",
+    "return-type": "json",
+    "format": "{icon}",
+    "format-icons": {
+      "idle": "",
+      "recording": "",
+      "transcribing": ""
+    },
+    "tooltip": true
+  },
+
+  "custom/idle-indicator": {
+    "on-click": "swayidle-toggle",
+    "exec": "echo '{\"icon\": \"\", \"class\": \"inactive\"}'",
+    "signal": 9,
+    "return-type": "json"
+  },
+
+  "custom/notification-silencing-indicator": {
+    "on-click": "makoctl mode -t toggle dnd",
+    "exec": "makoctl mode | grep -q dnd && echo '{\"icon\": \"\", \"class\": \"active\"}' || echo '{\"icon\": \"\", \"class\": \"inactive\"}'",
+    "signal": 10,
+    "return-type": "json",
+    "interval": 1
+  },
+
+  "tray": {
+    "icon-size": 12,
+    "spacing": 17
+  },
+
+  "custom/music": {
+    "format": "  {}",
+    "escape": true,
+    "interval": 5,
+    "tooltip": false,
+    "exec": "playerctl metadata --format='{{ artist }} - {{ title }}'",
+    "on-click": "playerctl play-pause",
+    "max-length": 50
+  }
+}

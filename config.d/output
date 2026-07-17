@@ -1,0 +1,191 @@
+# Output Configuration
+# Monitor/display settings
+# Migrated from Omarchy/Hyprland monitors.conf
+
+# ================================
+# OUTPUT COMMAND
+# ================================
+# swaymsg -t get_outputs
+# List current monitors: swaymsg -t get_outputs
+# Check available modes: swaymsg -t get_outputs | jq '.[] | .modes'
+
+# ================================
+# LAPTOP DISPLAY
+# ================================
+
+# Primary laptop display (adjust name and resolution)
+# Use: swaymsg -t get_outputs (to find exact output name)
+# output eDP-1 mode 1366x768@60Hz scale 1.0 pos 0 0
+
+# Example with scale 0.9 (Hyprland config used this)
+# output eDP-1 mode 1366x768@60Hz scale 0.9 pos 0 0
+
+# ================================
+# EXTERNAL DISPLAYS
+# ================================
+
+# HDMI external monitor
+# output HDMI-A-1 mode 2560x1440@144Hz scale 1 pos 1366 0
+
+# DisplayPort monitor
+# output DP-1 mode 3840x2160@60Hz scale 2 pos 0 0
+
+# Generic external (auto-detect)
+# output HDMI-A-1 mode preferred pos 0 0 scale 1
+
+# ================================
+# BACKGROUND
+# ================================
+
+# Solid color background
+output * bg #1e1e2e solid_color
+
+# Image background
+# output * bg ~/Pictures/wallpaper.jpg fill
+
+# Different backgrounds per monitor
+# output eDP-1 bg ~/Pictures/laptop_wallpaper.jpg fill
+# output HDMI-A-1 bg ~/Pictures/monitor_wallpaper.jpg fill
+
+# ================================
+# DPI AND SCALING
+# ================================
+
+# HiDPI scaling (2x for 4K displays)
+# output eDP-1 scale 2
+
+# Fractional scaling (more granular)
+# output eDP-1 scale 1.5
+
+# Custom DPI (for XWayland apps)
+# exec xrandr --output eDP-1 --scale 0.9x0.9
+
+# GDK_SCALE for GTK apps (set in environment)
+# set $env GDK_SCALE 1
+
+# ================================
+# MODES (RESOLUTION/REFRESH)
+# ================================
+
+# Custom mode (if not detected)
+# output HDMI-A-1 mode 2560x1440@144Hz
+
+# Preferred mode (auto-detect best)
+# output HDMI-A-1 mode preferred
+
+# Specific mode from available list
+# output HDMI-A-1 mode 1920x1080@60Hz
+
+# Custom modeline (for monitors that need it)
+# output HDMI-A-1 mode --custom 1920x1080@60Hz
+
+# ================================
+# POSITION (MULTI-MONITOR)
+# ================================
+
+# Left-right setup
+# output eDP-1 pos 0 0
+# output HDMI-A-1 pos 1366 0
+
+# Top-bottom setup
+# output eDP-1 pos 0 0
+# output HDMI-A-1 pos 0 768
+
+# ================================
+# TRANSFORM (ROTATION)
+# ================================
+
+# Rotate display 90 degrees
+# output HDMI-A-1 transform 90
+
+# Rotate 180 degrees
+# output HDMI-A-1 transform 180
+
+# Rotate 270 degrees
+# output HDMI-A-1 transform 270
+
+# Flip horizontally
+# output HDMI-A-1 transform flipped
+
+# ================================
+# ADAPTIVE SYNC (Freesync/G-Sync)
+# ================================
+
+# Enable adaptive sync
+# output HDMI-A-1 adaptive_sync on
+
+# ================================
+# WORKSPACE ASSIGNMENT
+# ================================
+
+# Assign workspaces to specific outputs
+# workspace 1 output eDP-1
+# workspace 2 output HDMI-A-1
+# workspace 3 output eDP-1
+
+# Named workspaces
+# workspace "Web" output HDMI-A-1
+# workspace "Code" output eDP-1
+
+# ================================
+# OUTPUT BINDINGS
+# ================================
+
+# Toggle outputs
+set $mode_display Display configuration
+mode "$mode_display" {
+    # Mirror displays
+    bindsym m output HDMI-A-1 pos 0 0; output eDP-1 pos 0 0; mode "default"
+
+    # Extend left
+    bindsym l output eDP-1 pos 1366 0; output HDMI-A-1 pos 0 0; mode "default"
+
+    # Extend right
+    bindsym r output eDP-1 pos 0 0; output HDMI-A-1 pos 1366 0; mode "default"
+
+    # Laptop only
+    bindsym 1 output HDMI-A-1 disable; mode "default"
+
+    # External only
+    bindsym 2 output eDP-1 disable; mode "default"
+
+    # Both
+    bindsym 3 output eDP-1 enable; output HDMI-A-1 enable; mode "default"
+
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+p mode "$mode_display"
+
+# ================================
+# LAPTOP LID BEHAVIOR
+# ================================
+
+# Bindswitch for laptop lid
+bindswitch --reload --no-warn lid:on output eDP-1 disable
+bindswitch --reload --no-warn lid:off output eDP-1 enable
+
+# Alternative: lock on lid close
+# bindswitch --reload lid:on exec swaylock
+
+# ================================
+# HOTPLUG HANDLING
+# ================================
+
+# Sway automatically detects new displays
+# Use `swaymsg -t subscribe '["output"]'` for event-driven scripts
+
+# =================================================================
+# SPECIFIC CONFIGURATIONS FROM HYPRLAND
+# =================================================================
+
+# From your Hyprland config:
+# monitor= eDP-1, 1366x768@60, 0x0, 0.9
+
+# Uncomment and adjust when ready:
+# output eDP-1 mode 1366x768@60Hz scale 0.9 pos 0 0
+
+# Second monitor example from Hyprland:
+# monitor=,1600x900@60,auto,1
+
+# Generic fallback (uses auto position):
+# output * mode preferred scale 1.0

@@ -1,0 +1,147 @@
+# Sway Configuration
+# Migrated from Omarchy (Hyprland)
+# See https://wiki.archlinux.org/title/Sway for reference
+
+# Variables
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term xdg-terminal-exec
+set $menu walker
+set $browser omarchy-launch-browser
+set $editor omarchy-launch-editor
+set $filemgr nautilus
+
+# Colors (Catppuccin Mocha)
+set $base #1e1e2e
+set $mantle #181825
+set $crust #11111b
+set $text #cdd6f4
+set $subtext0 #a6adc8
+set $subtext1 #bac2de
+set $surface0 #313244
+set $surface1 #45475a
+set $surface2 #585b70
+set $overlay0 #6c7086
+set $overlay1 #7f849c
+set $overlay2 #9399b2
+set $blue #89b4fa
+set $lavender #b4befe
+set $sapphire #74c7ec
+set $sky #89dceb
+set $teal #94e2d5
+set $green #a6e3a1
+set $yellow #f9e2af
+set $peach #fab387
+set $maroon #eba0ac
+set $red #f38ba8
+set $mauve #cba6f7
+set $pink #f5c2e7
+set $flamingo #f2cdcd
+set $rosewater #f5e0dc
+
+# Theme colors (for window borders)
+#                       border      background   text    indicator   child_border
+client.focused          $blue       $base        $text   $lavender   $blue
+client.focused_inactive $surface1   $base        $text   $surface1   $surface1
+client.unfocused        $surface0   $base        $text   $surface0   $surface0
+client.urgent           $red        $base        $text   $red        $red
+
+# Output configuration (monitor)
+output * bg #1e1e2e solid_color
+
+# Example monitor configs - uncomment and adjust as needed
+# Laptop internal display
+# output eDP-1 mode 1366x768@60Hz scale 0.9 pos 0 0
+
+# External monitor
+# output HDMI-A-1 mode 2560x1440@144Hz pos 1366 0 scale 1
+
+# See `swaymsg -t get_outputs` for available outputs
+
+# Input configuration
+input type:keyboard {
+    xkb_layout us
+    xkb_numlock enabled
+    repeat_delay 300
+    repeat_rate 50
+}
+
+input type:touchpad {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+    middle_emulation enabled
+    scroll_factor 1.0
+}
+
+# Input device-specific config
+# input 2:14:ETPS/2_Elantech_Touchpad {
+#     dwt enabled
+#     tap enabled
+#     natural_scroll enabled
+# }
+
+# Gaps configuration (like Hyprland)
+gaps inner 5
+gaps outer 10
+
+# Borders
+default_border pixel 2
+default_floating_border pixel 2
+
+# Hide edge borders when there's only one window
+hide_edge_borders smart
+
+# Layout
+workspace_layout default
+
+# Mouse bindings
+# Drag floating windows with $mod + mouse
+floating_modifier $mod normal
+
+# Include modular config files
+include ./config.d/*
+
+# Autostart applications
+# exec_always pkill -x -q -9 waybar; exec waybar
+# exec mako
+# exec_always pkill -x -q -9 walker; exec walker --gapplication-service
+
+# Start a terminal
+bindsym $mod+Return exec $term
+
+# Start launcher
+bindsym $mod+space exec $menu
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Drag floating windows
+floating_modifier $mod normal
+
+# Reload configuration
+bindsym $mod+Shift+c reload
+
+# Exit sway
+bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
+
+# Idle configuration
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 1e1e2e' \
+#          timeout 600 'swaymsg "output * power off"' \
+#               resume 'swaymsg "output * power on"' \
+#          before-sleep 'swaylock -f -c 1e1e2e'
+
+# Screenshot bindings (requires grim + slurp)
+# bindsym $mod+Print exec grim -g "$(slurp)" - | wl-copy
+# bindsym Print exec grim - | wl-copy
+# bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Pictures/$(date +'%Y%m%d_%H%M%S_grim.png')
+
+# Notifications toggle
+bindsym $mod+Shift+n exec makoctl mode -t toggle dnd
+
+# Theme background color fallback
+seat seat0 xcursor_theme Adwaita 24

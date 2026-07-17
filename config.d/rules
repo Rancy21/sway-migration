@@ -1,0 +1,211 @@
+# Window Rules
+# Migrated from Omarchy/Hyprland rules.conf
+# Sway uses for_window instead of windowrule
+
+# ================================
+# FLOATING WINDOWS
+# ================================
+
+# File managers
+for_window [app_id="nautilus"] floating enable
+for_window [app_id="thunar"] floating enable
+for_window [app_id="pcmanfm"] floating enable
+
+# System settings
+for_window [app_id="pavucontrol"] floating enable, move position center
+for_window [app_id="nm-connection-editor"] floating enable, move position center
+for_window [app_id="blueman-manager"] floating enable, move position center
+for_window [app_id="gnome-control-center"] floating enable
+for_window [app_id="gnome-calculator"] floating enable
+for_window [app_id="gnome-font-viewer"] floating enable
+
+# Dialogs
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="dialog"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [title="File Operation Progress"] floating enable
+for_window [title="Confirm to replace files"] floating enable
+
+# Password managers
+for_window [app_id="1password"] floating enable
+
+# IME
+for_window [app_id="fcitx5-config-qt"] floating enable
+
+# ================================
+# WORKSPACE ASSIGNMENTS
+# ================================
+
+# Browser on workspace 1
+# for_window [class="firefox"] move container to workspace number 1
+# for_window [class="chromium"] move container to workspace number 1
+
+# Code on workspace 2
+# for_window [class="code"] move container to workspace number 2
+# for_window [class="Code"] move container to workspace number 2
+
+# Music on workspace 3
+# for_window [class="spotify"] move container to workspace number 3
+
+# Communication on workspace 4
+# for_window [class="Signal"] move container to workspace number 4
+# for_window [class=" skypeforlinux"] move container to workspace number 4
+
+# Terminal tools (tui apps)
+# for_window [app_id="foot"] move container to workspace number 5
+
+# ================================
+| FULLSCREEN RULES
+# ================================
+
+# Force fullscreen for specific apps
+# for_window [class="zoom"] fullscreen enable
+
+# Disable fullscreen for specific apps
+# for_window [class="some-app"] fullscreen disable
+
+# ================================
+# SPECIFIC APP BEHAVIOR
+# ================================
+
+# Spotify (keep it contained)
+# for_window [class="Spotify"] move container to workspace number 8
+
+# Zoom (better window management)
+for_window [app_id="zoom"] floating enable
+for_window [title="Zoom Meeting"] fullscreen enable
+
+# Picture-in-picture
+for_window [title="Picture-in-Picture"] floating enable, sticky enable, move position 1200 700
+
+# ================================
+# OPACITY (Requires Picom)
+# ================================
+
+# Sway doesn't support opacity per window natively
+# You need to use picom compositor for this
+
+# Example picom.conf entries:
+# opacity-rule = [
+#     "90:class_g = 'Alacritty'",
+#     "80:class_g = 'Rofi'",
+# ]
+
+# To use picom with Sway:
+# exec_always picom --config ~/.config/picom/picom.conf
+
+# ================================
+# BORDER RULES
+# ================================
+
+# No borders for specific apps
+for_window [app_id="waybar"] border none
+for_window [app_id="mako"] border none
+
+# Custom border size for specific windows
+# for_window [class="some-app"] border pixel 5
+
+# ================================
+| SCRATCHPAD
+# ================================
+
+# Add apps to scratchpad (minimize to scratchpad, show when needed)
+# for_window [app_id="dropdown-terminal"] move scratchpad
+
+# Example: dropdown terminal
+# bindsym $mod+grave [app_id="dropdown-terminal"] scratchpad show
+
+# ================================
+# LAYOUT RULES
+# ================================
+
+# Force tabbed layout for specific apps
+# for_window [class="firefox"] layout tabbed
+
+# Force stacking layout
+# for_window [class="some-app"] layout stacking
+
+# Force split layout
+# for_window [class="code"] splith
+
+# ================================
+# OUTPUT ASSIGNMENT
+# ================================
+
+# Assign to specific monitor
+# for_window [class="spotify"] output HDMI-A-1
+# for_window [class="code"] output eDP-1
+
+# ================================
+# INHIBIT IDLE
+# ================================
+
+# Prevent screen blanking for specific apps
+# for_window [class="vlc"] inhibit_idle visible
+# for_window [app_id="mpv"] inhibit_idle visible
+# for_window [title="YouTube"] inhibit_idle visible
+
+# ================================
+# MARKS (Window bookmarking)
+# ================================
+
+# Mark windows to jump to them later
+# for_window [class="firefox"] mark browser
+
+# Jump to mark
+# bindsym $mod+Shift+f [con_mark="browser"] focus
+
+# ================================
+# NO_FOCUS
+# ================================
+
+# Prevent specific windows from stealing focus
+# for_window [class="some-app"] no_focus
+
+# ================================
+# EMULATOR/VIRTUALIZATION
+# ================================
+
+# QEMU
+# for_window [class="qemu-system-x86_64"] move container to workspace number 9
+
+# VirtualBox
+# for_window [class="VirtualBox"] floating enable
+
+# ================================
+# GAMING
+# ================================
+
+# Steam
+# for_window [class="Steam"] floating enable, border none
+
+# Games
+# for_window [class="^(steam_app_)(.*)$"] fullscreen enable
+
+# ================================
+# APP_ID vs CLASS
+# ================================
+
+# Wayland native apps use app_id
+# XWayland apps use class
+
+# To find app_id or class:
+# swaymsg -t get_tree | jq '.[] | select(.type=="con") | {name, app_id, window_properties}'
+
+# Example:
+# Wayland: for_window [app_id="foot"] ...
+# X11: for_window [class="Firefox"] ...
+
+# ================================
+# FLOATING SIZE
+# ================================
+
+# Set default size for floating windows
+# for_window [app_id="pavucontrol"] floating enable, resize set 800 600
+
+# ================================
+# MOVE TO SPECIFIC POSITION
+# ================================
+
+# Move window to specific position
+# for_window [app_id="some-app"] floating enable, move position 100 100
