@@ -1,196 +1,516 @@
-# Migration Checklist
+# Migration Checklist: Omarchy (Arch) → Fedora + Sway
 
-Track your progress from Omarchy (Hyprland) to Sway.
+Complete checklist for migrating from Omarchy/Hyprland to Fedora + Sway.
 
-## Pre-Migration ✓
+## Phase 1: Pre-Migration Backup
 
-- [x] Documented current Hyprland setup
-- [x] Created Sway config files
-- [x] Translated keybindings
-- [x] Translated appearance settings
-- [x] Translated window rules
-- [x] Adapted Waybar config
-
-## Installation
-
-- [ ] Install Sway
+### Arch/Omarchy Backup
+- [ ] Backup all configurations
   ```bash
-  sudo pacman -S sway
+  mkdir -p ~/migration-backup
+  cp -r ~/.config ~/migration-backup/config
+  cp -r ~/.local/share ~/migration-backup/local-share
+  cp -r ~/dotfiles ~/migration-backup/dotfiles
   ```
 
-- [ ] Install required packages
+- [ ] Export package lists
   ```bash
-  sudo pacman -S swaylock swayidle waybar grim slurp wl-clipboard
-  sudo pacman -S mako bemenu brightnessctl pamixer playerctl
+  pacman -Qqe > ~/migration-backup/arch-packages.txt
+  pacman -Qqm > ~/migration-backup/aur-packages.txt
   ```
 
-- [ ] Install optional packages
+- [ ] Export keybindings for reference
   ```bash
-  sudo pacman -S wofi cliphist polkit-gnome
+  omarchy menu keybindings --print > ~/migration-backup/keybindings.txt
+  omarchy theme current > ~/migration-backup/theme.txt
+  hyprctl monitors > ~/migration-backup/monitors.txt
   ```
 
-## Configuration
+- [ ] Backup personal data
+  - [ ] Documents
+  - [ ] Pictures
+  - [ ] Videos
+  - [ ] Music
+  - [ ] Browser profiles (Firefox, Chrome, etc.)
+  - [ ] SSH keys (`~/.ssh`)
+  - [ ] GPG keys (`~/.gnupg`)
 
-- [ ] Review and customize `config.d/output` for your monitors
+- [ ] Backup to external drive or cloud
+
+## Phase 2: Fedora Installation
+
+### Download Fedora
+- [ ] Choose edition:
+  - [ ] Fedora Workstation (Recommended)
+  - [ ] Fedora Sway Spin
+  - [ ] Fedora Everything
+
+- [ ] Download ISO from https://fedoraproject.org/
+
+### Create Installation Media
+- [ ] Create bootable USB
   ```bash
-  swaymsg -t get_outputs  # Show available outputs
+  sudo dd if=Fedora-*.iso of=/dev/sdX bs=4M status=progress && sync
   ```
 
-- [ ] Review and customize `config.d/input` for keyboard/mouse
+### Install Fedora
+- [ ] Boot from USB
+- [ ] Follow installer
+- [ ] Configure disk partitions (if dual-booting)
+- [ ] Create user account
+- [ ] Complete installation
+- [ ] Reboot
+
+## Phase 3: Initial Fedora Setup
+
+### First Boot
+- [ ] Complete initial setup wizard
+- [ ] Connect to network
+- [ ] Update system
   ```bash
-  swaymsg -t get_inputs  # Show available inputs
+  sudo dnf upgrade --refresh
   ```
 
-- [ ] Review `config.d/autostart` and enable desired daemons
-
-- [ ] Review `config.d/rules` and customize window behavior
-
-- [ ] Customize Waybar modules in `waybar/config.jsonc`
-
-## Testing
-
-- [ ] Test Sway configuration
+### Enable RPM Fusion
+- [ ] Enable RPM Fusion repositories
   ```bash
-  sway -c ./config
+  sudo dnf install \
+    https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm \
+    https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
   ```
 
-- [ ] Verify keybindings work
-
-- [ ] Check monitor configuration
-
-- [ ] Test Waybar
+- [ ] Update metadata
   ```bash
-  pkill waybar; waybar -c ./waybar/config.jsonc
+  sudo dnf group update core
   ```
 
-- [ ] Test screenshot bindings (Print, Mod+Print)
+### Install Multimedia Codecs
+- [ ] Install multimedia support
+  ```bash
+  sudo dnf group install "Multimedia"
+  sudo dnf install ffmpeg ffmpeg-libs gstreamer1-plugins-{base,good,bad-free,bad-freeworld}
+  ```
 
-- [ ] Test volume/brightness keys
+## Phase 4: Install Sway and Tools
 
-- [ ] Test workspace switching
+### Automated Installation (Recommended)
+- [ ] Run installation script
+  ```bash
+  cd /path/to/sway-migration
+  chmod +x fedora/install.sh
+  ./fedora/install.sh
+  ```
+- [ ] Choose option 'A' for full installation
 
-- [ ] Test window rules (floating apps)
+### Or Manual Installation
 
-## Deployment
+#### Core Sway Packages
+- [ ] Install Sway ecosystem
+  ```bash
+  sudo dnf install sway swaylock swayidle waybar wl-clipboard grim slurp mako wofi
+  ```
 
-- [ ] Copy config to standard location
+#### Terminals
+- [ ] Install terminal emulators
+  ```bash
+  sudo dnf install alacritty foot kitty
+  ```
+
+#### Utilities
+- [ ] Install essential utilities
+  ```bash
+  sudo dnf install btop htop curl wget git tmux fzf ripgrep fd-find bat exa
+  ```
+
+#### Development Tools
+- [ ] Install development tools
+  ```bash
+  sudo dnf install neovim python3 nodejs go rustcargo clang
+  ```
+
+#### Fonts
+- [ ] Install fonts
+  ```bash
+  sudo dnf install jetbrains-mono-fonts-all mozilla-fira-fonts-common
+  ```
+
+- [ ] Install Nerd Fonts manually from https://www.nerdfonts.com/
+
+#### Audio/Video
+- [ ] Install audio/video tools
+  ```bash
+  sudo dnf install pamixer pavucontrol playerctl brightnessctl
+  ```
+
+#### File Managers
+- [ ] Install file managers
+  ```bash
+  sudo dnf install nautilus thunar gvfs
+  ```
+
+#### Browsers
+- [ ] Install browsers
+  ```bash
+  sudo dnf install firefox chromium
+  ```
+
+#### Network Tools
+- [ ] Install network tools
+  ```bash
+  sudo dnf install network-manager-applet blueberry
+  ```
+
+## Phase 5: Deploy Configuration
+
+### Install Configs
+- [ ] Install Sway configuration
   ```bash
   mkdir -p ~/.config/sway
   cp config ~/.config/sway/
   cp -r config.d ~/.config/sway/
   ```
 
-- [ ] Copy Waybar config
+- [ ] Install Waybar configuration
   ```bash
   mkdir -p ~/.config/waybar
   cp waybar/config.jsonc ~/.config/waybar/
   cp waybar/style.css ~/.config/waybar/
   ```
 
-## Post-Migration
-
-- [ ] Configure swayidle for screen lock
-- [ ] Configure swaylock appearance
-- [ ] Set up screenshot scripts
-- [ ] Configure night light (wlsunset/gammastep)
-- [ ] Set GTK theme to Catppuccin
-- [ ] Configure clipboard manager (cliphist)
-- [ ] Test all Omarchy workflows in Sway
-
-## Optional Enhancements
-
-- [ ] Install picom for additional effects (blur, shadows)
+### Customize for Hardware
+- [ ] Check available monitors
   ```bash
-  sudo pacman -S picom
+  swaymsg -t get_outputs
   ```
 
-- [ ] Set up touchpad gestures (libinput-gestures or fusuma)
+- [ ] Edit monitor configuration
   ```bash
-  sudo pacman -S libinput-gestures
+  nano ~/.config/sway/config.d/output
   ```
 
-- [ ] Configure notification filters in Mako
+- [ ] Check input devices
+  ```bash
+  swaymsg -t get_inputs
+  ```
 
-- [ ] Create custom scripts for common tasks
+- [ ] Edit input configuration
+  ```bash
+  nano ~/.config/sway/config.d/input
+  ```
 
-- [ ] Set up dual-monitor workspace assignments
+## Phase 6: Enable Flathub
 
-## Known Differences from Hyprland
+- [ ] Install Flatpak
+  ```bash
+  sudo dnf install flatpak
+  ```
 
-### Features NOT available in Sway:
+- [ ] Enable Flathub repository
+  ```bash
+  flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+  ```
 
-- ❌ Advanced animations (fade, slide only)
-- ❌ Window blur effects (use picom if needed)
-- ❌ Per-window corner radius
-- ❌ Advanced workspace animations
-- ❌ Hyprland's built-in window grouping
+- [ ] Install common Flatpak apps
+  ```bash
+  flatpak install flathub com.spotify.Client
+  flatpak install flathub org.signal.Signal
+  flatpak install flathub md.obsidian.Obsidian
+  ```
 
-### Alternative Workflows:
+## Phase 7: Restore Personal Data
 
-| Omarchy Command | Sway Alternative | Status |
-|-----------------|------------------|--------|
-| `omarchy capture screenshot` | `grim` + `slurp` | [ ] |
-| `omarchy toggle nightlight` | `wlsunset` | [ ] |
-| `omarchy menu keybindings` | Custom script | [ ] |
-| `omarchy theme set` | Manual config edit | [ ] |
-| `omarchy restart waybar` | `pkill waybar; waybar` | [ ] |
-| `omarchy launch-*` | Direct app launch | [ ] |
+- [ ] Restore Documents
+- [ ] Restore Pictures
+- [ ] Restore Videos
+- [ ] Restore Music
+- [ ] Restore SSH keys
+  ```bash
+  cp -r /path/to/backup/.ssh ~/
+  chmod 700 ~/.ssh
+  chmod 600 ~/.ssh/id_rsa
+  ```
 
-## Notes
+- [ ] Restore GPG keys (if applicable)
+- [ ] Restore browser profiles (if applicable)
+- [ ] Restore other personal files
 
-- Record any issues encountered:
-  - _Issue 1:_
-  - _Issue 2:_
+## Phase 8: Test Sway
 
-- Custom scripts needed:
-  - _Script 1:_
-  - _Script 2:_
+### Test Configuration
+- [ ] Test Sway config
+  ```bash
+  sway
+  ```
 
-- Apps that need special configuration:
-  - _App 1:_
-  - _App 2:_
+### Verify Keybindings
+- [ ] Terminal (Super+Return)
+- [ ] Browser (Super+Shift+b)
+- [ ] File manager (Super+Shift+f)
+- [ ] Kill window (Super+q)
+- [ ] Fullscreen (Super+f)
+- [ ] Floating toggle (Super+Shift+space)
 
-## Completion
+### Verify Features
+- [ ] Monitor configuration correct
+- [ ] Waybar displays properly
+- [ ] Screenshots work (Print, Super+Print)
+- [ ] Volume keys work
+- [ ] Brightness keys work (laptop)
+- [ ] Network applet works
+- [ ] Bluetooth applet works
+- [ ] Notifications work (mako)
+- [ ] All applications launch
 
-When all items are checked:
+### Debug Issues if Needed
+- [ ] Check Sway logs
+  ```bash
+  journalctl --user -u sway
+  ```
 
-- [ ] Verified all workflows work in Sway
-- [ ] Documented any differences from Hyprland
-- [ ] Ready to make Sway the daily driver
+- [ ] Test Waybar manually
+  ```bash
+  waybar -c ~/.config/waybar/config.jsonc
+  ```
 
-**Migration completed on:** _Date_
+## Phase 9: Make Fedora Daily Driver
+
+### Set Up Autostart
+- [ ] Edit autostart config
+  ```bash
+  nano ~/.config/sway/config.d/autostart
+  ```
+
+- [ ] Enable Waybar
+- [ ] Enable Mako
+- [ ] Enable network applet
+- [ ] Enable other daemons
+
+### Theme Setup
+- [ ] Install Catppuccin GTK theme
+  ```bash
+  flatpak install flathub org.gtk.Gtk3theme.catppuccin-mocha
+  ```
+
+- [ ] Set GTK theme
+  ```bash
+  gsettings set org.gnome.desktop.interface gtk-theme 'Adw-gtk3-dark'
+  ```
+
+- [ ] Set icon theme
+- [ ] Set cursor theme
+
+### Install Additional Apps
+
+#### Communication
+- [ ] Install Signal
+  ```bash
+  flatpak install flathub org.signal.Signal
+  ```
+
+- [ ] Install Discord (if needed)
+- [ ] Install Telegram (if needed)
+
+#### Productivity
+- [ ] Install Obsidian
+  ```bash
+  flatpak install flathub md.obsidian.Obsidian
+  ```
+
+- [ ] Install LibreOffice
+  ```bash
+  sudo dnf install libreoffice-fresh
+  ```
+
+#### Development
+- [ ] Install VS Code (if needed)
+  ```bash
+  flatpak install flathub com.visualstudio.code
+  ```
+
+- [ ] Install IntelliJ (if needed)
+- [ ] Configure Git
+  ```bash
+  git config --global user.name "Your Name"
+  git config --global user.email "your.email@example.com"
+  ```
+
+#### Media
+- [ ] Install Spotify
+  ```bash
+  flatpak install flathub com.spotify.Client
+  ```
+
+- [ ] Install VLC or MPV
+  ```bash
+  sudo dnf install mpv
+  ```
+
+## Phase 10: Omarchy Alternatives Setup
+
+### Screenshots
+- [ ] Test screenshot bindings
+  - [ ] Print (full screen)
+  - [ ] Super+Print (region)
+  - [ ] Super+Shift+Print (window)
+
+### Night Light
+- [ ] Install wlsunset
+  ```bash
+  sudo dnf install wlsunset
+  ```
+
+- [ ] Configure with your coordinates
+  ```bash
+  wlsunset -l LATITUDE -L LONGITUDE
+  ```
+
+- [ ] Add to autostart
+
+### System Updates
+- [ ] Learn Fedora update command
+  ```bash
+  sudo dnf upgrade --refresh
+  ```
+
+### Package Management
+- [ ] Learn DNF commands
+  ```bash
+  sudo dnf search <package>
+  sudo dnf install <package>
+  sudo dnf remove <package>
+  ```
+
+- [ ] Learn Flatpak commands
+  ```bash
+  flatpak search <app>
+  flatpak install flathub <app-id>
+  flatpak update
+  ```
+
+## Phase 11: Power Management (Laptop)
+
+- [ ] Install powertop
+  ```bash
+  sudo dnf install powertop
+  ```
+
+- [ ] Calibrate powertop
+  ```bash
+  sudo powertop --calibrate
+  ```
+
+- [ ] Optionally install TLP (advanced power management)
+  ```bash
+  sudo dnf install tlp
+  sudo systemctl enable tlp
+  ```
+
+## Phase 12: Security and Backup
+
+### Firewall
+- [ ] Configure Firewalld (pre-installed)
+  ```bash
+  sudo firewall-cmd --state
+  sudo firewall-config  # GUI
+  ```
+
+### Backup Solution
+- [ ] Set up backup tool
+  - [ ] Timeshift (system backups)
+    ```bash
+    sudo dnf install timeshift
+    ```
+  - [ ] Borg (personal data)
+    ```bash
+    sudo dnf install borgbackup
+    ```
+
+- [ ] Configure automated backups
+
+## Phase 13: Final Steps
+
+### Cleanup
+- [ ] Remove unused packages
+  ```bash
+  sudo dnf autoremove
+  ```
+
+- [ ] Clean package cache
+  ```bash
+  sudo dnf clean all
+  ```
+
+### Backup New Setup
+- [ ] Backup Fedora configs
+  ```bash
+  mkdir -p ~/fedora-backup
+  cp -r ~/.config ~/fedora-backup/
+  ```
+
+- [ ] Export installed packages
+  ```bash
+  dnf history userinstalled > ~/fedora-backup/installed.txt
+  flatpak list > ~/fedora-backup/flatpaks.txt
+  ```
+
+- [ ] Backup to external drive
+
+### Verification
+- [ ] All essential apps work
+- [ ] All keybindings configured
+- [ ] Theme applied correctly
+- [ ] Backups configured
+- [ ] Performance is good
+- [ ] Battery life acceptable (laptop)
+
+## Phase 14: Documentation
+
+- [ ] Document any issues encountered
+- [ ] Document custom scripts created
+- [ ] Document differences from Omarchy
+- [ ] Note Fedora-specific configurations
 
 ---
 
-## Quick Reference
+## Quick Commands Reference
 
-Test config:
 ```bash
-sway -c ./config
-```
+# Update system
+sudo dnf upgrade --refresh
 
-Reload sway:
-```bash
+# Install package
+sudo dnf install <package>
+
+# Search package
+dnf search <package>
+
+# Remove package
+sudo dnf remove <package>
+
+# Install Flatpak
+flatpak install flathub <app-id>
+
+# Search Flatpak
+flatpak search <app>
+
+# Reload Sway
 swaymsg reload
-```
 
-Check errors:
-```bash
-swaymsg -t get_outputs
-swaymsg -t get_inputs
-```
-
-Restart waybar:
-```bash
+# Restart Waybar
 pkill waybar; waybar &
+
+# Lock screen
+swaylock
+
+# Screenshot region
+grim -g "$(slurp)" - | wl-copy
 ```
 
-Lock screen:
-```bash
-swaylock -f -c 1e1e2e
-```
+---
 
-Exit sway:
-```bash
-swaymsg exit
-```
+**Migration completed on:** _Date_
+
+**Fedora version:** _Version_
+
+**Notes:**
+- _Add your notes here_

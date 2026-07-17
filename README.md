@@ -1,104 +1,210 @@
-# Omarchy to Sway Migration
+# Omarchy (Arch) → Fedora + Sway Migration
 
-Migration project from **Omarchy (Hyprland)** to **Sway** on Arch Linux.
+Complete migration from **Omarchy (Hyprland on Arch Linux)** to **Fedora with Sway**.
 
-## Current Setup (Hyprland/Omarchy)
+## Why This Migration?
+
+- **Arch → Fedora**: More stable, predictable release cycle, still cutting-edge
+- **Hyprland → Sway**: Mature, stable, i3-compatible Wayland compositor
+- **Omarchy → Vanilla**: More control, less opinionated defaults
+
+## Current Setup (Omarchy/Arch)
 
 ### Components
+- **OS**: Arch Linux (Omarchy)
 - **Compositor**: Hyprland (Wayland)
-- **Theme**: Catppuccin (with custom aether theme available)
-- **Bar**: Waybar (symlinked to ~/dotfiles)
+- **Theme**: Catppuccin
+- **Bar**: Waybar
 - **Launcher**: Walker
 - **Notifications**: Mako
 - **Terminals**: Alacritty, Ghostty, Kitty
-- **OSD**: SwayOSD
 
-### Key Configuration Details
-- Gaps: 5px inner, 10px outer
-- Borders: 2px, active gradient border colors
-- Layout: Dwindle
-- Workspaces: 10 workspaces with workspace bindings
-- Monitor: eDP-1 at 1366x768@60, scaled to 0.9
+## Target Setup (Fedora + Sway)
 
-## Sway Migration Status
+### Components
+- **OS**: Fedora Linux (Workstation or Spin)
+- **Compositor**: Sway (Wayland)
+- **Theme**: Catppuccin (manually configured)
+- **Bar**: Waybar
+- **Launcher**: Wofi or Fuzzel (Walker alternatives)
+- **Notifications**: Mako or Swaync
+- **Terminals**: Alacritty, Foot, Kitty
+
+## Migration Status
 
 | Component | Status | Notes |
 |-----------|--------|-------|
-| Basic Config | ✅ Created | `config` - Main Sway configuration |
-| Keybindings | ✅ Created | Translated from Hyprland bindings |
-| Appearance | ✅ Created | Gaps, borders, colors (Catppuccin theme) |
-| Waybar | ⚠️ Needs Update | Change `hyprland/workspaces` to `sway/workspaces` |
-| Input/Output | ✅ Created | Monitor and input device configuration |
-| Autostart | ✅ Created | Startup applications |
-| Window Rules | 📝 TODO | Translate Hyprland window rules to Sway `for_window` |
-| Idle/Lock | 📝 TODO | Translate hypridle/hyprlock to swayidle/swaylock |
-| Screenshots | 📝 TODO | Configure grim/slurp bindings |
+| Base OS | 📝 TODO | Fedora installation |
+| Sway Config | ✅ Created | Main config + modular files |
+| Keybindings | ✅ Created | Translated from Hyprland |
+| Waybar | ✅ Created | Adapted for Sway |
+| Package replacement | 📝 TODO | Arch → Fedora package mapping |
+| Omarchy tools | ⚠️ NEEDS REPLACEMENT | Arch/Omarchy-specific tools won't work |
 
-## Key Differences: Hyprland vs Sway
+## Fedora vs Arch Differences
 
-| Feature | Hyprland | Sway |
-|---------|----------|------|
-| Config Syntax | Custom DSL | i3-compatible |
-| Layouts | Dwindle, Master | splith/splitv/tabbed/stacking |
-| Animations | Advanced animations | Minimal (fade/slide) |
-| Decorations | Blur, shadows, rounding | Simple borders |
-| Window Rules | `windowrule = ...` | `for_window [...] ...` |
-| Keybinding Format | `bind = MOD, key, action` | `bindsym $mod+key action` |
+| Aspect | Arch (Omarchy) | Fedora |
+|--------|----------------|--------|
+| Package manager | `pacman` | `dnf` |
+| AUR helper | `yay`, `paru` | RPM Fusion |
+| Release model | Rolling | 6-month releases |
+| Kernel | Latest always | Latest stable |
+| Wayland | Experimental | First-class citizen |
+| Omarchy | ✅ Available | ❌ Not available |
 
-## Testing Sway
+## Not Available on Fedora
 
-To test Sway without replacing Hyprland:
+These Omarchy-specific tools won't work on Fedora:
 
-```bash
-# From TTY (Ctrl+Alt+F2) or from Hyprland terminal
-sway
+| Omarchy Tool | Fedora Alternative | Install Command |
+|--------------|-------------------|-----------------|
+| `omarchy` CLI | Manual config | N/A |
+| `omarchy theme` | Manual theme files | N/A |
+| `omarchy capture` | `grim` + `slurp` | `sudo dnf install grim slurp` |
+| `omarchy toggle nightlight` | `wlsunset` | `sudo dnf install wlsunset` |
+| `omarchy menu` | `wofi` or `fuzzel` | `sudo dnf install wofi` |
+| `omarchy launch-*` | Direct commands | N/A |
+| `omarchy update` | `sudo dnf upgrade` | N/A |
 
-# Or use a specific config
-sway -c ./config
-```
+## Fedora Installation Steps
 
-To switch completely:
-```bash
-# Install Sway (if not installed)
-sudo pacman -S sway swaylock swayidle waybar grim slurp
+### Option A: Fedora Workstation + Sway (Recommended)
+1. Download Fedora Workstation
+2. Install normally
+3. Install Sway on top: `sudo dnf install @sway`
 
-# Remove Hyprland from autologin (if configured)
-# Edit /etc/gdm/custom.conf or your display manager config
+### Option B: Fedora Sway Spin
+1. Download Fedora Sway Spin
+2. Pre-configured Sway desktop
+3. Customize from there
 
-# Enable Sway session at login
-# This depends on how you log in (GDM, SDDM, tty + bash_profile)
-```
+### Option C: Fedora Everything
+1. Minimal install
+2. Build up from scratch
+3. Maximum control
+
+## Post-Install Checklist
+
+- [ ] Enable RPM Fusion (for multimedia codecs, proprietary drivers)
+- [ ] Install Sway and Wayland tools
+- [ ] Copy configuration files
+- [ ] Install theme and fonts
+- [ ] Configure terminal
+- [ ] Set up dotfiles
 
 ## Files in This Project
 
 ```
 .
-├── config              # Main Sway configuration
-├── config.d/           # Modular config files
-│   ├── bindings        # Keybindings (translated from Hyprland)
-│   ├── appearance      # Colors, gaps, borders (Catppuccin)
-│   ├── input          # Keyboard, touchpad, mouse settings
-│   ├── output         # Monitor configuration
-│   ├── autostart      # Startup applications
-│   └── rules          # Window rules
-├── waybar/            # Waybar configs adapted for Sway
-│   ├── config.jsonc   # Bar config (needs sway/workspaces)
-│   └── style.css      # Styling (compatible as-is)
-└── README.md          # This file
+├── config                    # Main Sway configuration
+├── config.d/                 # Modular configuration files
+│   ├── appearance           # Colors, gaps, borders (Catppuccin)
+│   ├── autostart            # Startup applications
+│   ├── bindings             # Keybindings (from Hyprland)
+│   ├── input                # Keyboard, touchpad settings
+│   ├── output               # Monitor configuration
+│   └── rules                # Window rules
+├── waybar/                   # Waybar configs
+│   ├── config.jsonc         # Bar config (sway/workspaces)
+│   └── style.css            # Styling
+├── fedora/                   # Fedora-specific files
+│   ├── packages.txt         # Package list for Fedora
+│   ├── install.sh           # Post-install script
+│   └── rpm-fusion.sh        # Enable RPM Fusion
+├── migrate.sh                # Interactive migration helper
+├── MIGRATION.md              # Step-by-step migration guide
+├── QUICKREF.md               # Quick reference card
+├── TODO.md                   # Migration checklist
+└── README.md                 # This file
 ```
+
+## Quick Start (After Fedora Install)
+
+```bash
+# 1. Enable RPM Fusion
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm
+
+# 2. Install Sway and tools
+sudo dnf install @sway waybar grim slurp wl-clipboard mako wofi brightnessctl pamixer
+
+# 3. Install this config
+mkdir -p ~/.config/sway
+cp config ~/.config/sway/
+cp -r config.d ~/.config/sway/
+
+# 4. Install Waybar config
+mkdir -p ~/.config/waybar
+cp waybar/config.jsonc ~/.config/waybar/
+cp waybar/style.css ~/.config/waybar/
+
+# 5. Test
+sway
+```
+
+## Omarchy Commands → Fedora Alternatives
+
+### System Updates
+
+```bash
+# Arch/Omarchy
+omarchy update
+sudo pacman -Syu
+
+# Fedora
+sudo dnf upgrade --refresh
+sudo dnf update
+```
+
+### Package Management
+
+```bash
+# Arch/Omarchy
+sudo pacman -S package
+yay -S aur-package
+
+# Fedora
+sudo dnf install package
+sudo dnf search package
+sudo dnf remove package
+```
+
+### Screenshots
+
+```bash
+# Omarchy
+omarchy capture screenshot
+
+# Fedora (with this config)
+# Press Print for full screen
+# Press Super+Print for region
+# Press Super+Shift+Print for window
+```
+
+### Night Light
+
+```bash
+# Omarchy
+omarchy toggle nightlight
+
+# Fedora (manual)
+wlsunset -l 37.7749 -L 122.4194  # Set your coordinates
+```
+
+## Key Resources
+
+- [Fedora Sway Spin](https://fedoraproject.org/spins/sway/)
+- [Fedora Docs](https://docs.fedoraproject.org/)
+- [RPM Fusion](https://rpmfusion.org/)
+- [Sway Wiki](https://github.com/swaywm/sway/wiki)
+- [Waybar Wiki](https://github.com/Alexays/Waybar/wiki)
 
 ## Next Steps
 
-1. **Test the config**: Run `sway -c ./config` from a TTY
-2. **Adapt Waybar**: Replace `hyprland/workspaces` with `sway/workspaces`
-3. **Configure idle/lock**: Set up swayidle + swaylock
-4. **Screenshot bindings**: Add grim/slurp bindings
-5. **Fine-tune**: Adjust keybindings and workspace behavior to match Hyprland
+1. **Read MIGRATION.md** - Complete Fedora installation guide
+2. **Run fedora/install.sh** - Automated package installation
+3. **Customize config.d/files** - Adapt to your preferences
+4. **Test thoroughly** - Before making Fedora your daily driver
 
-## Resources
+---
 
-- [Sway Wiki](https://github.com/swaywm/sway/wiki)
-- [i3 User's Guide](https://i3wm.org/docs/userguide.html) (Sway is compatible)
-- [Sway Migration Guide](https://github.com/swaywm/sway/wiki/i3-Migration-Guide)
-- [Hyprland to Sway Migration Tips](https://github.com/swaywm/sway/wiki/Differences-from-i3)
-# sway-migration
+**Important**: This project assumes a fresh Fedora installation. If you're dual-booting or have existing data, backup everything first!

@@ -1,16 +1,57 @@
-# Quick Reference Card
+# Quick Reference Card: Fedora + Sway
 
-Essential commands and keybindings for Sway (migrated from Omarchy/Hyprland).
+Essential commands and keybindings for Fedora with Sway (migrated from Omarchy/Arch).
 
-## Essential Commands
+## Fedora System Commands
+
+### Package Management
+
+| Action | Arch/Omarchy | Fedora |
+|--------|--------------|--------|
+| Update system | `omarchy update` or `sudo pacman -Syu` | `sudo dnf upgrade --refresh` |
+| Install package | `sudo pacman -S package` | `sudo dnf install package` |
+| Remove package | `sudo pacman -R package` | `sudo dnf remove package` |
+| Search package | `pacman -Ss package` | `dnf search package` |
+| List installed | `pacman -Qqe` | `dnf history userinstalled` |
+| Clean cache | `sudo pacman -Sc` | `sudo dnf clean all` |
+| Remove orphans | `sudo pacman -Rns $(pacman -Qdtq)` | `sudo dnf autoremove` |
+
+### Flatpak (Additional Software)
 
 | Action | Command |
 |--------|---------|
-| Test config | `sway -c ./config` |
-| Reload config | `$mod+Shift+c` |
+| Search app | `flatpak search app-name` |
+| Install app | `flatpak install flathub app-id` |
+| List installed | `flatpak list` |
+| Update all | `flatpak update` |
+| Remove app | `flatpak uninstall app-id` |
+
+### Common Flatpak Apps
+
+```bash
+# Communication
+flatpak install flathub org.signal.Signal
+flatpak install flathub com.discordapp.Discord
+
+# Productivity
+flatpak install flathub md.obsidian.Obsidian
+
+# Media
+flatpak install flathub com.spotify.Client
+
+# Development
+flatpak install flathub com.visualstudio.code
+```
+
+## Sway Commands
+
+| Action | Command |
+|--------|---------|
+| Start Sway | `sway` |
+| Test config | `sway -c /path/to/config` |
+| Reload config | `swaymsg reload` or `$mod+Shift+c` |
 | Exit Sway | `$mod+Shift+e` |
-| Lock screen | `$mod+Escape` |
-| Reload swaymsg | `swaymsg reload` |
+| Lock screen | `swaylock -f -c 1e1e2e` |
 
 ## Window Management
 
@@ -31,17 +72,15 @@ Essential commands and keybindings for Sway (migrated from Omarchy/Hyprland).
 | Focus down | `$mod+j` or `$mod+Down` |
 | Focus up | `$mod+k` or `$mod+Up` |
 | Focus right | `$mod+l` or `$mod+Right` |
-| Focus parent | `$mod+a` |
-| Focus child | `$mod+c` |
 
 ## Window Movement
 
 | Action | Binding |
 |--------|---------|
-| Move left | `$mod+Shift+h` |
-| Move down | `$mod+Shift+j` |
-| Move up | `$mod+Shift+k` |
-| Move right | `$mod+Shift+l` |
+| Move left | `$mod+Shift+h` or `$mod+Shift+Left` |
+| Move down | `$mod+Shift+j` or `$mod+Shift+Down` |
+| Move up | `$mod+Shift+k` or `$mod+Shift+Up` |
+| Move right | `$mod+Shift+l` or `$mod+Shift+Right` |
 
 ## Workspaces
 
@@ -63,24 +102,16 @@ Essential commands and keybindings for Sway (migrated from Omarchy/Hyprland).
 | Tabbed | `$mod+w` |
 | Toggle split | `$mod+e` |
 
-## Applications (From Hyprland Config)
+## Applications (From Omarchy Config)
 
-| App | Binding |
-|-----|---------|
-| Browser | `$mod+Shift+b` |
-| Browser (private) | `$mod+Shift+Alt+b` |
-| File manager | `$mod+Shift+f` |
-| Editor (VSCode) | `$mod+Shift+c` |
-| Editor (Neovim) | `$mod+Shift+n` |
-| Music (Spotify) | `$mod+Shift+m` |
-| Terminal btop | `$mod+Shift+t` |
-| Docker (lazydocker) | `$mod+Shift+d` |
-| 1Password | `$mod+Shift+/` |
-| Email (HEY) | `$mod+Shift+e` |
-| ChatGPT | `$mod+Shift+a` |
-| YouTube | `$mod+Shift+y` |
-| Signal | `$mod+Shift+g` |
-| Suspend | `$mod+Shift+s` |
+| App | Binding | Fedora Install |
+|-----|---------|----------------|
+| Terminal | `$mod+Return` | Pre-installed |
+| Browser | `$mod+Shift+b` | `sudo dnf install firefox chromium` |
+| File manager | `$mod+Shift+f` | `sudo dnf install nautilus` |
+| Editor | `$mod+Shift+n` | `sudo dnf install neovim` |
+| Btop | `$mod+Shift+t` | `sudo dnf install btop` |
+| Music | `$mod+Shift+m` | `flatpak install flathub com.spotify.Client` |
 
 ## Resize Mode
 
@@ -96,52 +127,92 @@ Enter resize mode: `$mod+r`
 
 ## Screenshots
 
-| Action | Binding |
-|--------|---------|
-| Screenshot region | `$mod+Print` |
-| Screenshot full | `Print` |
-| Screenshot window | `$mod+Shift+Print` |
-| Save to file | `$mod+Ctrl+Print` |
+| Action | Binding | Fedora Package |
+|--------|---------|----------------|
+| Screenshot full | `Print` | `grim` |
+| Screenshot region | `$mod+Print` | `grim slurp` |
+| Screenshot window | `$mod+Shift+Print` | `grim slurp` |
+| Save to file | `$mod+Ctrl+Print` | `grim` |
+
+Install: `sudo dnf install grim slurp wl-clipboard`
 
 ## Media Keys
 
-| Action | Binding |
-|--------|---------|
-| Volume up | `XF86AudioRaiseVolume` |
-| Volume down | `XF86AudioLowerVolume` |
-| Mute | `XF86AudioMute` |
-| Brightness up | `XF86MonBrightnessUp` |
-| Brightness down | `XF86MonBrightnessDown` |
-| Play/Pause | `XF86AudioPlay` |
-| Next track | `XF86AudioNext` |
-| Previous track | `XF86AudioPrev` |
+| Action | Binding | Fedora Package |
+|--------|---------|----------------|
+| Volume up | `XF86AudioRaiseVolume` | `pamixer` |
+| Volume down | `XF86AudioLowerVolume` | `pamixer` |
+| Mute | `XF86AudioMute` | `pamixer` |
+| Brightness up | `XF86MonBrightnessUp` | `brightnessctl` |
+| Brightness down | `XF86MonBrightnessDown` | `brightnessctl` |
+| Play/Pause | `XF86AudioPlay` | `playerctl` |
 
-## Gaps Mode
+Install: `sudo dnf install pamixer brightnessctl playerctl`
 
-Enter gaps mode: `$mod+Shift+g`
+## Omarchy Commands → Fedora Alternatives
 
-| Action | Binding |
-|--------|---------|
-| Increase inner gaps | `+` |
-| Decrease inner gaps | `-` |
-| Reset inner gaps | `0` |
-| Increase outer gaps | `Shift++` |
-| Decrease outer gaps | `Shift+-` |
-| Reset outer gaps | `Shift+0` |
-| Exit mode | `Return` or `Escape` |
+### Screenshots
 
-## Display Mode
+```bash
+# Omarchy
+omarchy capture screenshot
 
-Enter display mode: `$mod+Shift+p`
+# Fedora (with this config)
+# Print - Full screen
+# Super+Print - Select region
+# Super+Shift+Print - Current window
+```
 
-| Action | Binding |
-|--------|---------|
-| Mirror displays | `m` |
-| Extend left | `l` |
-| Extend right | `r` |
-| Laptop only | `1` |
-| External only | `2` |
-| Both displays | `3` |
+### Night Light
+
+```bash
+# Omarchy
+omarchy toggle nightlight
+
+# Fedora
+wlsunset -l 37.7749 -L 122.4194  # Set your coordinates
+
+# Add to autostart: exec wlsunset -l LAT -L LONG
+```
+
+Install: `sudo dnf install wlsunset`
+
+### Theme Management
+
+```bash
+# Omarchy
+omarchy theme set catppuccin
+
+# Fedora (manual)
+# Edit ~/.config/sway/config.d/appearance
+# Edit ~/.config/waybar/style.css
+# Use gsettings for GTK theme
+gsettings set org.gnome.desktop.interface gtk-theme 'Adw-gtk3-dark'
+```
+
+### System Updates
+
+```bash
+# Arch/Omarchy
+omarchy update
+sudo pacman -Syu
+
+# Fedora
+sudo dnf upgrade --refresh
+sudo dnf update
+```
+
+### Package Search
+
+```bash
+# Arch
+pacman -Ss package
+yay -Ss aur-package
+
+# Fedora
+dnf search package
+flatpak search app-name
+```
 
 ## Common Commands
 
@@ -152,24 +223,56 @@ swaymsg -t get_outputs
 # Show inputs
 swaymsg -t get_inputs
 
-# Show config errors
-swaymsg -t get_tree
-
-# List all windows
-swaymsg -t get_tree | jq '.. | select(.type?) | select(.focused)'
-
-# Find app_id/class
+# Find app_id/class for window rules
 swaymsg -t get_tree | jq '.[] | select(.type=="con") | {name, app_id}'
 
-# Restart waybar
+# Restart Waybar
 pkill waybar; waybar &
 
 # Lock screen
 swaylock -f -c 1e1e2e
 
-# Suspend
-systemctl suspend
+# Night light
+wlsunset -l 37.7749 -L 122.4194
+
+# Check Fedora version
+cat /etc/fedora-release
+rpm -E %fedora
+
+# Enable RPM Fusion (first-time setup)
+sudo dnf install https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm
+
+# Find package providing a command
+dnf provides /usr/bin/command-name
+
+# View package info
+dnf info package-name
+
+# List recent package history
+dnf history
 ```
+
+## File Locations
+
+| File | Path |
+|------|------|
+| Sway config | `~/.config/sway/config` |
+| Sway modules | `~/.config/sway/config.d/` |
+| Waybar config | `~/.config/waybar/config.jsonc` |
+| Waybar style | `~/.config/waybar/style.css` |
+| Mako config | `~/.config/mako/config` |
+| Environment vars | `~/.config/environment.d/` |
+
+## Fedora-Specific Tools
+
+| Tool | Purpose | Install |
+|------|---------|---------|
+| `dnf` | Package manager | Pre-installed |
+| `flatpak` | Containerized apps | Pre-installed |
+| `rpm-ostree` | Atomic upgrades (Silverblue) | Pre-installed on Silverblue |
+| `abstract` | Layered packages (Silverblue) | Pre-installed on Silverblue |
+| `firewalld` | Firewall | Pre-installed |
+| `selinux` | Security | Pre-installed |
 
 ## Default Values
 
@@ -180,20 +283,8 @@ systemctl suspend
 | Gaps outer | `10px` |
 | Border size | `2px` |
 | Terminal | `xdg-terminal-exec` |
-| Launcher | `walker` (configurable) |
+| Launcher | `wofi` |
 | Theme | Catppuccin Mocha |
-
-## Migration Differences
-
-| Hyprland | Sway |
-|----------|------|
-| `bind = SUPER, ...` | `bindsym $mod+...` |
-| `windowrule = ...` | `for_window [...] ...` |
-| `hyprctl` | `swaymsg` |
-| Dwindle layout | splith/splitv/tabbed/stacking |
-| Advanced animations | Minimal (fade/slide) |
-| Blur/shadows | (Use picom for this) |
-| `hyprland/workspaces` | `sway/workspaces` |
 
 ## Color Theme (Catppuccin Mocha)
 
@@ -208,20 +299,86 @@ systemctl suspend
 | Yellow | `#f9e2af` |
 | Mauve | `#cba6f7` |
 
-## File Locations
+## Useful Fedora Resources
 
-| File | Path |
-|------|------|
-| Main config | `~/.config/sway/config` |
-| Config modules | `~/.config/sway/config.d/` |
-| Waybar config | `~/.config/waybar/config.jsonc` |
-| Waybar style | `~/.config/waybar/style.css` |
-| Mako config | `~/.config/mako/config` |
-| Swaylock config | `~/.config/swaylock/config` |
+- Fedora Docs: https://docs.fedoraproject.org/
+- RPM Fusion: https://rpmfusion.org/
+- Flathub: https://flathub.org/
+- Fedora Wiki: https://fedoraproject.org/wiki/
+- Bug Reports: https://bugzilla.redhat.com/
+
+## Migration Differences: Arch vs Fedora
+
+| Aspect | Arch (Omarchy) | Fedora |
+|--------|----------------|--------|
+| Release model | Rolling | 6-month releases |
+| Package manager | `pacman` | `dnf` |
+| AUR packages | `yay`, `paru` | Use Flatpak or RPM Fusion |
+| Config location | `~/.config` | Same |
+| Omarchy tools | ✅ Available | ❌ Use alternatives |
+| Documentation | Arch Wiki | Fedora Docs |
+| Wayland support | Experimental | Well-supported |
+
+## Performance Optimization
+
+```bash
+# Check system info
+neofetch  # or fastfetch
+
+# Monitor resources
+btop
+
+# CPU temperature
+sensors
+
+# Disk usage
+df -h
+du -sh /path/to/dir
+
+# Check for package updates
+dnf check-update
+
+# Clean old kernels (keep last 3)
+sudo dnf remove --oldinstallonly --setopt installonly_limit=3
+```
+
+## Quick Troubleshooting
+
+### Sway won't start
+```bash
+sway -c ~/.config/sway/config -v  # Verbose output
+```
+
+### Waybar not showing
+```bash
+waybar -c ~/.config/waybar/config.jsonc  # Test manually
+```
+
+### Missing applications
+```bash
+# Search Fedora repos
+dnf search app-name
+
+# Search Flathub
+flatpak search app-name
+
+# Check what package provides a command
+dnf provides /usr/bin/command
+```
+
+### Package conflicts
+```bash
+# View package dependencies
+dnf repoquery --deplist package-name
+
+# View what requires a package
+dnf repoquery --whatrequires package-name
+```
 
 ---
 
-**Tip**: Add this to your shell for quick reference:
+**Tip**: Add to your shell for quick reference:
 ```bash
 alias quickref='cat ~/path/to/sway-migration/QUICKREF.md | less'
+alias fedorahelp='cat ~/path/to/sway-migration/FEDORA-BASICS.md | less'
 ```

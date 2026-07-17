@@ -1,0 +1,234 @@
+# Fedora Package List
+# Packages to install on Fedora after fresh installation
+# Format: One package per line, comments with #
+
+# ================================
+# SWAY AND WAYLAND CORE
+# ================================
+sway
+swaylock
+swayidle
+waybar
+wl-clipboard
+grim
+slurp
+wofi
+mako
+
+# ================================
+# TERMINALS
+# ================================
+alacritty
+foot
+kitty
+# ghostty  # Note: Ghostty is not in Fedora repos yet, use AppImage or Flatpak
+
+# ================================
+# AUDIO/VIDEO
+# ================================
+pamixer
+pavucontrol
+playerctl
+brightnessctl
+
+# ================================
+# ESSENTIAL UTILITIES
+# ================================
+btop
+htop
+neofetch
+fastfetch
+curl
+wget
+git
+tmux
+fzf
+ripgrep
+fd-find
+bat
+exa
+htop
+lm_sensors
+
+# ================================
+# DEVELOPMENT
+# ================================
+neovim
+vim-enhanced
+code  # VS Code (requires RPM Fusion or Microsoft repo)
+lazygit
+
+# ================================
+# THEMES AND FONTS
+# ================================
+# Fonts
+jetbrains-mono-fonts-all
+mozilla-fira-fonts-common
+adobe-source-code-pro-fonts
+google-roboto-fonts
+# Nerd Fonts (install manually from https://www.nerdfonts.com/
+
+# GTK Themes (install from Flathub/Flatpak)
+# catppuccin-gtk-theme  # Available in Flathub
+# papirus-icon-theme
+
+# Cursor themes
+adwaita-cursor-theme
+
+# ================================
+# FILE MANAGEMENT
+# ================================
+nautilus
+thunar
+file-roller
+ gvfs  # For trash, mount support in file managers
+
+# ================================
+# NETWORK
+# ================================
+network-manager-applet
+NetworkManager-wifi
+blueberry  # Bluetooth manager
+networkmanager-openvpn
+networkmanager-openconnect
+
+# ================================
+# BROWSERS
+# ================================
+firefox
+chromium
+# google-chrome-stable  # Requires Google repo
+# microsoft-edge-stable  # Requires Microsoft repo
+
+# ================================
+# COMMUNICATION
+# ================================
+# signal-desktop  # Requires Flathub or Signal repo
+# telegram-desktop
+# discord  # Requires Flathub
+
+# ================================
+# MULTIMEDIA
+# ================================
+mpv
+vlc
+spotify-launcher  # Fedora package, or use Flatpak
+
+# ================================
+# PRODUCTIVITY
+# ================================
+# obsidian  # Use Flatpak
+# typora  # Not available, use AppImage
+# 1password  # Use Flatpak or 1Password repo
+
+# ================================
+# OFFICE
+# ================================
+libreoffice-fresh
+evince  # PDF viewer
+calibre  # E-book reader
+
+# ================================
+# GRAPHICS
+# ================================
+gimp
+inkscape
+# blender
+
+# ================================
+# POWER MANAGEMENT (LAPTOP)
+# ================================
+powertop
+tlp  # Optional, for advanced power management
+acpi
+
+# ================================
+# VIRTUALIZATION
+# ================================
+# qemu
+# qemu-system-x86
+# virt-manager
+# libvirt
+
+# ================================
+# CONTAINERS
+# ================================
+# docker
+# docker-compose
+# podman  # included by default in Fedora
+# buildah
+
+# ================================
+# POLKIT AND AUTH
+# ================================
+polkit-gnome
+
+# ================================
+# BACKUP
+# ================================
+rsync
+borgbackup
+timeshift  # System backup utility
+
+# ================================
+# ARCHIVER
+# ================================
+p7zip
+p7zip-plugins
+unzip
+zip
+tar
+xz
+
+# ================================
+# MAN PAGES AND DOCS
+# ================================
+man-db
+man-pages
+tldr
+
+# ================================
+# CODECS AND MULTIMEDIA (RPM Fusion)
+# ================================
+# These require RPM Fusion enabled
+# gstreamer1-plugins-base
+# gstreamer1-plugins-good
+# gstreamer1-plugins-bad-free
+# gstreamer1-plugins-bad-freeworld
+# gstreamer1-plugins-ugly-free
+# gstreamer1-plugins-ugly-freeworld
+# ffmpeg
+# ffmpeg-libs
+
+# ================================
+# GNOME INTEGRATION (if using GNOME apps)
+# ================================
+gnome-control-center
+gnome-terminal
+gnome-calculator
+gnome-screenshot
+nautilus
+
+# ================================
+# X11 COMPAT (for XWayland)
+# ================================
+xorg-x11-server-Xwayland
+xorg-x11-utils
+xrandr
+
+# ================================
+# FLATPAK (recommended on Fedora)
+# ================================
+flatpak
+
+# ================================
+# ADDITIONAL TOOLS
+# ================================
+java-17-openjdk  # or java-21-openjdk
+python3
+python3-pip
+nodejs
+npm
+go
+rustcargo
+clang
