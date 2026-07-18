@@ -22,14 +22,14 @@ bindsym $mod+Mod1+Shift+f exec uwsm-app -- $filemgr --new-window "$(pwd)"
 bindsym $mod+Shift+b exec $browser
 bindsym $mod+Shift+Mod1+b exec $browser --private
 
-# Email
-bindsym $mod+Shift+e exec omarchy-launch-webapp "https://app.hey.com"
+# Email ( conflicts with Exit - commenting out)
+# bindsym $mod+Shift+e exec omarchy-launch-webapp "https://app.hey.com"
 
 # Calendar
 # bindsym $mod+Shift+c exec omarchy-launch-webapp "https://app.hey.com/calendar/weeks/"
 
-# Editor/IDE
-bindsym $mod+Shift+c exec omarchy-launch-or-focus code
+# Editor/IDE (conflicts with reload - using Super+Shift+Mod1+c instead)
+bindsym $mod+Shift+Mod1+c exec omarchy-launch-or-focus code
 bindsym $mod+Shift+n exec omarchy-launch-editor
 
 # Music
@@ -45,8 +45,8 @@ bindsym $mod+Shift+t exec omarchy-launch-tui btop
 # Docker
 bindsym $mod+Shift+d exec omarchy-launch-tui lazydocker
 
-# Chat apps
-bindsym $mod+Shift+g exec omarchy-launch-or-focus ^signal$ "uwsm-app -- signal-desktop"
+# Chat apps (Signal conflicts with gaps mode - using Mod1+Shift+g)
+bindsym $mod+Mod1+Shift+g exec omarchy-launch-or-focus ^signal$ "uwsm-app -- signal-desktop"
 bindsym $mod+Shift+o exec omarchy-launch-or-focus ^obsidian$ "uwsm-app -- obsidian"
 bindsym $mod+Shift+w exec uwsm-app -- typora --enable-wayland-ime
 
@@ -56,7 +56,7 @@ bindsym $mod+Shift+Mod1+a exec omarchy-launch-webapp "https://grok.com"
 bindsym $mod+Shift+y exec omarchy-launch-webapp "https://youtube.com/"
 bindsym $mod+Shift+Mod1+g exec omarchy-launch-or-focus-webapp WhatsApp "https://web.whatsapp.com/"
 bindsym $mod+Shift+Mod1+f exec omarchy-launch-or-focus firefox
-bindsym $mod+Shift+p exec omarchy-launch-or-focus-webapp "Google Photos" "https://photos.google.com/"
+bindsym $mod+Shift+Mod1+p exec omarchy-launch-or-focus-webapp "Google Photos" "https://photos.google.com/"
 bindsym $mod+Shift+x exec omarchy-launch-webapp "https://x.com/"
 bindsym $mod+Shift+Mod1+x exec omarchy-launch-webapp "https://x.com/compose/post"
 bindsym $mod+Shift+Ctrl+g exec omarchy-launch-or-focus-webapp "Google Messages" "https://messages.google.com/web/conversations"

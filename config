@@ -110,11 +110,14 @@ include ./config.d/*
 # exec mako
 # exec_always pkill -x -q -9 walker; exec walker --gapplication-service
 
+# Note: Keybindings are defined in config.d/bindings to avoid conflicts
+# The following are just examples if not using modular configs:
+
 # Start a terminal
-bindsym $mod+Return exec $term
+# bindsym $mod+Return exec $term
 
 # Start launcher
-bindsym $mod+space exec $menu
+# bindsym $mod+space exec $menu
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -123,10 +126,10 @@ bindsym $mod+Shift+q kill
 floating_modifier $mod normal
 
 # Reload configuration
-bindsym $mod+Shift+c reload
+# bindsym $mod+Shift+c reload
 
 # Exit sway
-bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
+# bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg exit'
 
 # Idle configuration
 # exec swayidle -w \
@@ -140,8 +143,8 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg e
 # bindsym Print exec grim - | wl-copy
 # bindsym $mod+Shift+Print exec grim -g "$(slurp)" ~/Pictures/$(date +'%Y%m%d_%H%M%S_grim.png')
 
-# Notifications toggle
-bindsym $mod+Shift+n exec makoctl mode -t toggle dnd
+# Notifications toggle (disabled - conflicts with editor binding)
+# bindsym $mod+Shift+n exec makoctl mode -t toggle dnd
 
 # Theme background color fallback
 seat seat0 xcursor_theme Adwaita 24

@@ -53,8 +53,8 @@ input type:touchpad {
     # Scroll factor (speed)
     scroll_factor 1.0
 
-    # Tap-and-drag
-    tap_drag enabled
+    # Tap-and-drag (not supported in all versions)
+    # tap_drag enabled
 
     # Disable tap-to-select
     # tap_button_map lrm

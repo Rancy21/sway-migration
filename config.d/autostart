@@ -157,7 +157,7 @@ exec wl-paste --type image --watch cliphist store
 # exec blueman-applet
 
 # ================================
-| POWER MANAGEMENT
+# POWER MANAGEMENT
 # ================================
 
 # TLP (laptop power management)
@@ -188,7 +188,7 @@ exec_always systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESK
 # exec_always fusuma -d
 
 # ================================
-| CUSTOM SCRIPTS
+# CUSTOM SCRIPTS
 # ================================
 
 # Run any custom startup scripts

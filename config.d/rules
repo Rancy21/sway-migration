@@ -55,7 +55,7 @@ for_window [app_id="fcitx5-config-qt"] floating enable
 # for_window [app_id="foot"] move container to workspace number 5
 
 # ================================
-| FULLSCREEN RULES
+# FULLSCREEN RULES
 # ================================
 
 # Force fullscreen for specific apps
@@ -106,7 +106,7 @@ for_window [app_id="mako"] border none
 # for_window [class="some-app"] border pixel 5
 
 # ================================
-| SCRATCHPAD
+# SCRATCHPAD
 # ================================
 
 # Add apps to scratchpad (minimize to scratchpad, show when needed)
