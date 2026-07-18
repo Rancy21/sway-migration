@@ -16,7 +16,7 @@ bindsym $mod+Mod1+Return exec $term -- tmux new
 
 # File manager
 bindsym $mod+Shift+f exec nautilus --new-window
-bindsym $mod+Mod1+Shift+f exec nautilus --new-window "$HOME"
+bindsym $mod+Ctrl+f exec nautilus --new-window "$HOME"
 
 # Browser
 bindsym $mod+Shift+b exec ~/.local/bin/launch-browser
@@ -43,20 +43,20 @@ bindsym $mod+Shift+t exec ~/.local/bin/launch-tui btop
 bindsym $mod+Shift+d exec ~/.local/bin/launch-tui lazydocker
 
 # Chat apps
-bindsym $mod+Mod1+Shift+g exec signal-desktop
+bindsym $mod+Shift+Mod1+s exec signal-desktop
 bindsym $mod+Shift+o exec obsidian
-bindsym $mod+Alt+Shift+w exec flatpak run org.standardnotes.standardnotes
+bindsym $mod+Ctrl+n exec flatpak run org.standardnotes.standardnotes
 
 # Web apps (open in browser)
 bindsym $mod+Shift+a exec ~/.local/bin/launch-webapp "https://chatgpt.com"
-bindsym $mod+Shift+Mod1+a exec ~/.local/bin/launch-webapp "https://grok.com"
+bindsym $mod+Ctrl+a exec ~/.local/bin/launch-webapp "https://grok.com"
 bindsym $mod+Shift+y exec ~/.local/bin/launch-webapp "https://youtube.com/"
-bindsym $mod+Shift+Mod1+g exec ~/.local/bin/launch-webapp "https://web.whatsapp.com/"
-bindsym $mod+Shift+Mod1+f exec firefox
-bindsym $mod+Shift+Mod1+p exec ~/.local/bin/launch-webapp "https://photos.google.com/"
+bindsym $mod+Ctrl+w exec ~/.local/bin/launch-webapp "https://web.whatsapp.com/"
+bindsym $mod+Ctrl+Shift+f exec firefox
+bindsym $mod+Ctrl+p exec ~/.local/bin/launch-webapp "https://photos.google.com/"
 bindsym $mod+Shift+x exec ~/.local/bin/launch-webapp "https://x.com/"
-bindsym $mod+Shift+Mod1+x exec ~/.local/bin/launch-webapp "https://x.com/compose/post"
-bindsym $mod+Shift+Ctrl+g exec ~/.local/bin/launch-webapp "https://messages.google.com/web/conversations"
+bindsym $mod+Ctrl+x exec ~/.local/bin/launch-webapp "https://x.com/compose/post"
+bindsym $mod+Ctrl+m exec ~/.local/bin/launch-webapp "https://messages.google.com/web/conversations"
 
 # System
 bindsym $mod+Shift+s exec systemctl suspend
@@ -222,8 +222,8 @@ bindsym $mod+Ctrl+Print exec grim ~/Pictures/$(date +'%Y%m%d_%H%M%S_sway.png')
 # App Launcher
 # =================================================
 
-# Wofi launcher (lightweight alternative to Walker)
-bindsym $mod+Shift+space exec wofi --show drun
+# Wofi launcher (alternative: Super+d)
+bindsym $mod+d exec wofi --show drun
 
 # =================================================
 # System Actions
