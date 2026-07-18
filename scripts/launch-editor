@@ -1,0 +1,31 @@
+#!/bin/bash
+# launch-editor: Launch preferred text editor
+# Usage: launch-editor [file]
+
+FILE="$1"
+
+# Try Neovim first
+if command -v nvim &>/dev/null; then
+    if [ -n "$FILE" ]; then
+        xdg-terminal-exec -- nvim "$FILE"
+    else
+        xdg-terminal-exec -- nvim
+    fi
+# Fallback to vim
+elif command -v vim &>/dev/null; then
+    if [ -n "$FILE" ]; then
+        xdg-terminal-exec -- vim "$FILE"
+    else
+        xdg-terminal-exec -- vim
+    fi
+# Fallback to nano
+elif command -v nano &>/dev/null; then
+    if [ -n "$FILE" ]; then
+        xdg-terminal-exec -- nano "$FILE"
+    else
+        xdg-terminal-exec -- nano
+    fi
+else
+    notify-send "No editor found"
+    exit 1
+fi

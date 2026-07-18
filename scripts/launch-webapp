@@ -1,0 +1,24 @@
+#!/bin/bash
+# launch-webapp: Open URL in browser (optionally as webapp/PWA)
+# Usage: launch-webapp <url>
+
+URL="$1"
+
+if [ -z "$URL" ]; then
+    echo "Usage: launch-webapp <url>"
+    exit 1
+fi
+
+# Try Firefox first (more common on Fedora)
+if command -v firefox &>/dev/null; then
+    firefox "$URL" &
+# Fallback to Chromium
+elif command -v chromium &>/dev/null; then
+    chromium "$URL" &
+# Fallback to generic browser
+elif command -v xdg-open &>/dev/null; then
+    xdg-open "$URL" &
+else
+    echo "No browser found"
+    exit 1
+fi

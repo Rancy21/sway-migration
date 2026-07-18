@@ -44,7 +44,7 @@
 #cpu,
 #battery,
 #pulseaudio,
-#custom-omarchy,
+#custom-menu,
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
@@ -98,7 +98,7 @@ tooltip {
 
 /* --- Left Modules (Individual, Fully Rounded Blocks - With Horizontal Spacing & Simple Hover) --- */
 #workspaces,
-#custom-omarchy,
+#custom-menu,
 #cpu {
   background-color: #1e1e2e;
   padding: 0.2rem 0.7rem;

@@ -1,5 +1,5 @@
 # Keybindings
-# Migrated from Omarchy/Hyprland bindings.conf
+# Using custom scripts (copied to ~/.local/bin/)
 
 # Use Mod4 (Super) as $mod, set in main config
 # set $mod Mod4
@@ -8,58 +8,55 @@
 # Applications
 # =================================================
 
-# Terminal (super simple)
+# Terminal
 bindsym $mod+Return exec $term
 
-# Terminal with Tmux (like Hyprland SUPER+ALT+Return)
+# Terminal with Tmux
 bindsym $mod+Mod1+Return exec $term -- tmux new
 
 # File manager
-bindsym $mod+Shift+f exec uwsm-app -- $filemgr --new-window
-bindsym $mod+Mod1+Shift+f exec uwsm-app -- $filemgr --new-window "$(pwd)"
+bindsym $mod+Shift+f exec nautilus --new-window
+bindsym $mod+Mod1+Shift+f exec nautilus --new-window "$HOME"
 
 # Browser
-bindsym $mod+Shift+b exec $browser
-bindsym $mod+Shift+Mod1+b exec $browser --private
+bindsym $mod+Shift+b exec ~/.local/bin/launch-browser
+bindsym $mod+Shift+Mod1+b exec ~/.local/bin/launch-browser --private
 
-# Email ( conflicts with Exit - commenting out)
-# bindsym $mod+Shift+e exec omarchy-launch-webapp "https://app.hey.com"
+# Email (webmail)
+bindsym $mod+Shift+Mod1+e exec ~/.local/bin/launch-webapp "https://mail.google.com"
 
-# Calendar
-# bindsym $mod+Shift+c exec omarchy-launch-webapp "https://app.hey.com/calendar/weeks/"
-
-# Editor/IDE (conflicts with reload - using Super+Shift+Mod1+c instead)
-bindsym $mod+Shift+Mod1+c exec omarchy-launch-or-focus code
-bindsym $mod+Shift+n exec omarchy-launch-editor
+# Editor/IDE
+bindsym $mod+Shift+Mod1+c exec code
+bindsym $mod+Shift+n exec ~/.local/bin/launch-editor
 
 # Music
-bindsym $mod+Shift+m exec omarchy-launch-or-focus spotify
-bindsym $mod+Shift+Mod1+m exec omarchy-launch-or-focus-tui cliamp
+bindsym $mod+Shift+m exec spotify
+bindsym $mod+Shift+Mod1+m exec ~/.local/bin/launch-tui ncspot
 
-# Password manager
-bindsym $mod+Shift+slash exec uwsm-app -- 1password
+# Password manager (1Password - use Flatpak version)
+bindsym $mod+Shift+slash exec flatpak run com.onepassword.OnePassword
 
 # Activity monitor
-bindsym $mod+Shift+t exec omarchy-launch-tui btop
+bindsym $mod+Shift+t exec ~/.local/bin/launch-tui btop
 
 # Docker
-bindsym $mod+Shift+d exec omarchy-launch-tui lazydocker
+bindsym $mod+Shift+d exec ~/.local/bin/launch-tui lazydocker
 
-# Chat apps (Signal conflicts with gaps mode - using Mod1+Shift+g)
-bindsym $mod+Mod1+Shift+g exec omarchy-launch-or-focus ^signal$ "uwsm-app -- signal-desktop"
-bindsym $mod+Shift+o exec omarchy-launch-or-focus ^obsidian$ "uwsm-app -- obsidian"
-bindsym $mod+Shift+w exec uwsm-app -- typora --enable-wayland-ime
+# Chat apps
+bindsym $mod+Mod1+Shift+g exec signal-desktop
+bindsym $mod+Shift+o exec obsidian
+bindsym $mod+Alt+Shift+w exec flatpak run org.standardnotes.standardnotes
 
-# Web apps
-bindsym $mod+Shift+a exec omarchy-launch-webapp "https://chatgpt.com"
-bindsym $mod+Shift+Mod1+a exec omarchy-launch-webapp "https://grok.com"
-bindsym $mod+Shift+y exec omarchy-launch-webapp "https://youtube.com/"
-bindsym $mod+Shift+Mod1+g exec omarchy-launch-or-focus-webapp WhatsApp "https://web.whatsapp.com/"
-bindsym $mod+Shift+Mod1+f exec omarchy-launch-or-focus firefox
-bindsym $mod+Shift+Mod1+p exec omarchy-launch-or-focus-webapp "Google Photos" "https://photos.google.com/"
-bindsym $mod+Shift+x exec omarchy-launch-webapp "https://x.com/"
-bindsym $mod+Shift+Mod1+x exec omarchy-launch-webapp "https://x.com/compose/post"
-bindsym $mod+Shift+Ctrl+g exec omarchy-launch-or-focus-webapp "Google Messages" "https://messages.google.com/web/conversations"
+# Web apps (open in browser)
+bindsym $mod+Shift+a exec ~/.local/bin/launch-webapp "https://chatgpt.com"
+bindsym $mod+Shift+Mod1+a exec ~/.local/bin/launch-webapp "https://grok.com"
+bindsym $mod+Shift+y exec ~/.local/bin/launch-webapp "https://youtube.com/"
+bindsym $mod+Shift+Mod1+g exec ~/.local/bin/launch-webapp "https://web.whatsapp.com/"
+bindsym $mod+Shift+Mod1+f exec firefox
+bindsym $mod+Shift+Mod1+p exec ~/.local/bin/launch-webapp "https://photos.google.com/"
+bindsym $mod+Shift+x exec ~/.local/bin/launch-webapp "https://x.com/"
+bindsym $mod+Shift+Mod1+x exec ~/.local/bin/launch-webapp "https://x.com/compose/post"
+bindsym $mod+Shift+Ctrl+g exec ~/.local/bin/launch-webapp "https://messages.google.com/web/conversations"
 
 # System
 bindsym $mod+Shift+s exec systemctl suspend
@@ -168,7 +165,7 @@ bindsym $mod+minus scratchpad show
 # =================================================
 
 mode "resize" {
-    # Resize with left/right keys (width)
+    # Resize with arrow keys
     bindsym Left resize shrink width 10px
     bindsym Right resize grow width 10px
     bindsym Down resize grow height 10px
@@ -225,11 +222,8 @@ bindsym $mod+Ctrl+Print exec grim ~/Pictures/$(date +'%Y%m%d_%H%M%S_sway.png')
 # App Launcher
 # =================================================
 
-# Walker launcher (like Omarchy menu)
-# bindsym $mod+space exec walker
-# Alternative: use bemenu or wofi
-# bindsym $mod+space exec bemenu-run
-# bindsym $mod+space exec wofi --show drun
+# Wofi launcher (lightweight alternative to Walker)
+bindsym $mod+Shift+space exec wofi --show drun
 
 # =================================================
 # System Actions
@@ -245,7 +239,7 @@ bindsym $mod+Shift+e exec swaynag -t warning -m 'Exit sway?' -B 'Yes' 'swaymsg e
 bindsym $mod+Escape exec swaylock -f -c 1e1e2e
 
 # =================================================
-# Clipboard (if cliphist/wl-clipboard installed)
+# Clipboard (requires cliphist)
 # =================================================
 
-# bindsym $mod+Shift+v exec cliphist list | bemenu | cliphist decode | wl-copy
+# bindsym $mod+Shift+v exec cliphist list | wofi --dmenu | cliphist decode | wl-copy

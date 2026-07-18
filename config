@@ -9,9 +9,9 @@ set $down j
 set $up k
 set $right l
 set $term xdg-terminal-exec
-set $menu walker
-set $browser omarchy-launch-browser
-set $editor omarchy-launch-editor
+set $menu wofi --show drun
+set $browser firefox
+set $editor nvim
 set $filemgr nautilus
 
 # Colors (Catppuccin Mocha)

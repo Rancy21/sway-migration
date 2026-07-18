@@ -1,0 +1,27 @@
+#!/bin/bash
+# launch-browser: Launch preferred browser
+# Usage: launch-browser [--private]
+
+PRIVATE="$1"
+
+# Try Firefox first (most common on Fedora)
+if command -v firefox &>/dev/null; then
+    if [ "$PRIVATE" = "--private" ]; then
+        firefox --private-window &
+    else
+        firefox &
+    fi
+# Fallback to Chromium
+elif command -v chromium &>/dev/null; then
+    if [ "$PRIVATE" = "--private" ]; then
+        chromium --incognito &
+    else
+        chromium &
+    fi
+# Fallback
+elif command -v xdg-open &>/dev/null; then
+    xdg-open "https://google.com" &
+else
+    notify-send "No browser found"
+    exit 1
+fi

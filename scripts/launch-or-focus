@@ -1,0 +1,23 @@
+#!/bin/bash
+# launch-or-focus: Launch app or focus if already running
+# Usage: launch-or-focus <app-name-or-pattern> [command-to-run]
+# Example: launch-or-focus "^signal$" "signal-desktop"
+
+PATTERN="$1"
+COMMAND="${2:-$1}"
+
+if [ -z "$PATTERN" ]; then
+    echo "Usage: launch-or-focus <pattern> [command]"
+    exit 1
+fi
+
+# Check if app is already running (match against app_id or class)
+if swaymsg -t get_tree | grep -q "\"$PATTERN\""; then
+    # Focus the existing window
+    swaymsg "[app_id=\"$PATTERN\"] focus" 2>/dev/null || \
+    swaymsg "[class=\"$PATTERN\"] focus" 2>/dev/null || \
+    swaymsg "[title=\"$PATTERN\"] focus" 2>/dev/null
+else
+    # Launch the app
+    eval "$COMMAND" &
+fi
