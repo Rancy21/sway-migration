@@ -131,7 +131,7 @@ Complete checklist for migrating from Omarchy/Hyprland to Fedora + Sway.
 #### Fonts
 - [ ] Install fonts
   ```bash
-  sudo dnf install jetbrains-mono-fonts-all mozilla-fira-fonts-common
+  sudo dnf install jetbrains-mono-fonts-all fira-code-fonts
   ```
 
 - [ ] Install Nerd Fonts manually from https://www.nerdfonts.com/

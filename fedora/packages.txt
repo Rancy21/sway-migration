@@ -63,7 +63,7 @@ lazygit
 # ================================
 # Fonts
 jetbrains-mono-fonts-all
-mozilla-fira-fonts-common
+fira-code-fonts
 adobe-source-code-pro-fonts
 google-roboto-fonts
 # Nerd Fonts (install manually from https://www.nerdfonts.com/

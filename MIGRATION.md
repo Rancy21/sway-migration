@@ -181,7 +181,7 @@ sudo dnf install btop htop curl wget git tmux fzf ripgrep fd-find bat exa
 sudo dnf install neovim python3 nodejs go rustcargo
 
 # Fonts
-sudo dnf install jetbrains-mono-fonts-all mozilla-fira-fonts-common
+sudo dnf install jetbrains-mono-fonts-all fira-code-fonts
 
 # Audio/Video
 sudo dnf install pamixer pavucontrol playerctl brightnessctl

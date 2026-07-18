@@ -52,7 +52,7 @@ prompt_yes_no() {
 # Update system
 update_system() {
     echo -e "${BLUE}Updating system...${NC}"
-    sudo dnf upgrade --refresh -y
+    sudo dnf upgrade --refresh -y --skip-unavailable
     echo -e "${GREEN}✓ System updated${NC}"
 }
 
@@ -78,8 +78,8 @@ enable_rpmfusion() {
 install_codecs() {
     echo -e "${BLUE}Installing multimedia codecs...${NC}"
 
-    sudo dnf group install -y "Multimedia"
-    sudo dnf install -y \
+    sudo dnf group install -y "Multimedia" || echo -e "${YELLOW}Multimedia group already installed or unavailable${NC}"
+    sudo dnf install -y --skip-unavailable \
         ffmpeg \
         ffmpeg-libs \
         gstreamer1-plugins-base \
@@ -88,7 +88,7 @@ install_codecs() {
         gstreamer1-plugins-bad-freeworld \
         gstreamer1-plugins-ugly-free \
         gstreamer1-plugins-ugly-freeworld \
-        libavcodec-freeworld
+        libavcodec-freeworld || echo -e "${YELLOW}Some codecs already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Codecs installed${NC}"
 }
@@ -97,7 +97,7 @@ install_codecs() {
 install_sway() {
     echo -e "${BLUE}Installing Sway and Wayland tools...${NC}"
 
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         sway \
         swaylock \
         swayidle \
@@ -107,7 +107,7 @@ install_sway() {
         slurp \
         mako \
         wofi \
-        bemenu
+        bemenu || echo -e "${YELLOW}Some packages already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Sway installed${NC}"
 }
@@ -116,7 +116,7 @@ install_sway() {
 install_terminals() {
     echo -e "${BLUE}Installing terminals...${NC}"
 
-    sudo dnf install -y alacritty foot kitty
+    sudo dnf install -y --skip-unavailable alacritty foot kitty || echo -e "${YELLOW}Some terminals already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Terminals installed${NC}"
 }
@@ -125,7 +125,7 @@ install_terminals() {
 install_utilities() {
     echo -e "${BLUE}Installing essential utilities...${NC}"
 
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         btop \
         htop \
         curl \
@@ -140,11 +140,11 @@ install_utilities() {
         neofetch \
         fastfetch \
         lm_sensors \
-        polkit-gnome \
+        lxpolkit \
         brightnessctl \
         pamixer \
         playerctl \
-        pavucontrol
+        pavucontrol || echo -e "${YELLOW}Some utilities already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Utilities installed${NC}"
 }
@@ -155,10 +155,10 @@ install_fonts() {
 
     sudo dnf install -y \
         jetbrains-mono-fonts-all \
-        mozilla-fira-fonts-common \
+        fira-code-fonts \
         adobe-source-code-pro-fonts \
         google-roboto-fonts \
-        adwaita-cursor-theme
+        adwaita-cursor-theme || echo -e "${YELLOW}Some fonts already installed or unavailable${NC}"
 
     echo -e "${YELLOW}Note: Install Nerd Fonts manually from https://www.nerdfonts.com/${NC}"
     echo -e "${GREEN}✓ Fonts installed${NC}"
@@ -168,7 +168,7 @@ install_fonts() {
 install_dev_tools() {
     echo -e "${BLUE}Installing development tools...${NC}"
 
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         neovim \
         vim-enhanced \
         python3 \
@@ -180,7 +180,7 @@ install_dev_tools() {
         clang \
         java-17-openjdk \
         git \
-        lazygit
+        lazygit || echo -e "${YELLOW}Some development tools already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Development tools installed${NC}"
 }
@@ -189,7 +189,7 @@ install_dev_tools() {
 install_browsers() {
     echo -e "${BLUE}Installing browsers...${NC}"
 
-    sudo dnf install -y firefox chromium
+    sudo dnf install -y --skip-unavailable firefox chromium || echo -e "${YELLOW}Some browsers already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Browsers installed${NC}"
 }
@@ -198,7 +198,7 @@ install_browsers() {
 install_file_managers() {
     echo -e "${BLUE}Installing file managers...${NC}"
 
-    sudo dnf install -y nautilus thunar file-roller gvfs
+    sudo dnf install -y --skip-unavailable nautilus thunar file-roller gvfs || echo -e "${YELLOW}Some file managers already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ File managers installed${NC}"
 }
@@ -274,11 +274,11 @@ install_theme() {
 configure_network() {
     echo -e "${BLUE}Installing network tools...${NC}"
 
-    sudo dnf install -y \
+    sudo dnf install -y --skip-unavailable \
         network-manager-applet \
         NetworkManager-wifi \
         blueberry \
-        lxpolkit
+        lxpolkit || echo -e "${YELLOW}Some network tools already installed or unavailable${NC}"
 
     echo -e "${GREEN}✓ Network tools installed${NC}"
     echo -e "${YELLOW}Note: Using lxpolkit (lightweight polkit agent)${NC}"
