@@ -23,12 +23,17 @@ Complete migration from **Omarchy (Hyprland on Arch Linux)** to **Fedora with Sw
 
 ### Components
 - **OS**: Fedora Linux (Workstation or Spin)
-- **Compositor**: Sway (Wayland)
+- **Compositor**: SwayFX (Sway fork with animations/rounded corners/shadows)
 - **Theme**: Catppuccin (manually configured)
 - **Bar**: Waybar
 - **Launcher**: Wofi or Fuzzel (Walker alternatives)
 - **Notifications**: Mako or Swaync
 - **Terminals**: Alacritty, Foot, Kitty
+
+> **Why SwayFX?** Vanilla Sway does not support animations, rounded corners, or
+> shadows. SwayFX is a drop-in fork of Sway that adds these features
+> (corner_radius, shadows, blur, dim_inactive, etc). Install via
+> `sudo dnf copr enable swayfx/swayfx && sudo dnf install swayfx`.
 
 ## Migration Status
 
@@ -36,6 +41,8 @@ Complete migration from **Omarchy (Hyprland on Arch Linux)** to **Fedora with Sw
 |-----------|--------|-------|
 | Base OS | 📝 TODO | Fedora installation |
 | Sway Config | ✅ Created | Main config + modular files |
+| SwayFX effects | ✅ Created | Rounded corners, blur, shadows, focus light, dimming |
+| Animations | ⚠️ EXPERIMENTAL | Stable SwayFX lacks open/close animations; build swayfx-git |
 | Keybindings | ✅ Created | Translated from Hyprland |
 | Waybar | ✅ Created | Adapted for Sway |
 | Package replacement | 📝 TODO | Arch → Fedora package mapping |
@@ -99,6 +106,7 @@ These Omarchy-specific tools won't work on Fedora:
 ├── config                    # Main Sway configuration
 ├── config.d/                 # Modular configuration files
 │   ├── appearance           # Colors, gaps, borders (Catppuccin)
+│   ├── swayfx               # SwayFX-only effects (rounded corners, blur, focus light)
 │   ├── autostart            # Startup applications
 │   ├── bindings             # Keybindings (from Hyprland)
 │   ├── input                # Keyboard, touchpad settings

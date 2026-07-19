@@ -93,12 +93,22 @@ install_codecs() {
     echo -e "${GREEN}✓ Codecs installed${NC}"
 }
 
-# Install Sway and Wayland tools
+# Enable SwayFX COPR (for animations, rounded corners, shadows)
+enable_swayfx_copr() {
+    echo -e "${BLUE}Enabling SwayFX COPR...${NC}"
+    sudo dnf copr enable -y swayfx/swayfx
+    echo -e "${GREEN}✓ SwayFX COPR enabled${NC}"
+}
+
+# Install SwayFX (Sway with eye candy) and Wayland tools
 install_sway() {
-    echo -e "${BLUE}Installing Sway and Wayland tools...${NC}"
+    echo -e "${BLUE}Installing SwayFX and Wayland tools...${NC}"
+
+    # Enable COPR first (only needed if swayfx not in default repos)
+    enable_swayfx_copr
 
     sudo dnf install -y --skip-unavailable \
-        sway \
+        swayfx \
         swaylock \
         swayidle \
         waybar \
@@ -109,8 +119,7 @@ install_sway() {
         wofi \
         bemenu || echo -e "${YELLOW}Some packages already installed or unavailable${NC}"
 
-    echo -e "${GREEN}✓ Sway installed${NC}"
-}
+    echo -e "${GREEN}✓ SwayFX installed${NC}"}
 
 # Install terminals
 install_terminals() {

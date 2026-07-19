@@ -1,0 +1,91 @@
+# SwayFX Configuration
+# Requires SwayFX (not vanilla Sway) - https://github.com/WillPower3309/swayfx
+# Install via: dnf copr enable swayfx/swayfx && dnf install swayfx
+# Or: sudo dnf install swayfx (if in Terra repo)
+
+# ================================
+# CORNER RADIUS
+# ================================
+# Round all window corners (requires gaps to be visible)
+corner_radius 12
+
+# ================================
+# BLUR
+# ================================
+blur enable
+blur_xray disable                     # Don't blur windows below; blur against background
+blur_passes 3                         # Higher = smoother (3-4 recommended)
+blur_radius 6                         # Blur kernel size
+blur_noise 0.03                       # Noise reduction
+blur_brightness 0.9                   # Slightly dim for depth
+blur_contrast 1.1
+blur_saturation 1.1
+
+# ================================
+# SHADOWS
+# ================================
+shadows enable
+shadows_on_csd enable                 # Allow shadows on client-side decorated windows
+shadow_blur_radius 24                  # Softness of shadow
+shadow_color #00000080                 # Subtle black shadow (alpha ~50%)
+shadow_offset 0 6                      # Offset downward 6px
+# Unfocused window shadow (darker, less visible)
+shadow_inactive_color #00000050
+
+# ================================
+# DIM UNFOCUSED WINDOWS
+# ================================
+default_dim_inactive 0.15              # Dim level (0.0 = no dim, 1.0 = full dim)
+# Overlay colors for dimming
+dim_inactive_colors.unfocused #0000007F
+dim_inactive_colors.urgent #f38ba87F  # Catppuccin Red (for urgent/highlight)
+
+# ================================
+# TITLE BAR
+# ================================
+# Remove separator between titlebar and content for cleaner look
+titlebar_separator disable
+
+# ================================
+# LAYER EFFECTS (Waybar/panels)
+# ================================
+# Apply blur, shadows, and corner rounding to Waybar
+layer_effects "waybar" {
+    blur enable;
+    blur_xray disable;
+    blur_ignore_transparent enable;
+    shadows enable;
+    corner_radius 10;
+}
+
+# ================================
+# FOCUS BORDER (thicker, more visible)
+# ================================
+# Override default border width (set earlier to 2px)
+# Note: SwayFX uses a single border width for all windows
+default_border pixel 3
+default_floating_border pixel 3
+
+# Window colors (Catppuccin Mocha override - lighter focused border)
+#                       border      background   text    indicator   child_border
+client.focused          $lavender   $base        $text   $lavender   $lavender
+client.focused_inactive $surface1   $base        $text   $surface1   $surface1
+client.unfocused        $surface0   $base        $text   $surface0   $surface0
+client.urgent           $red        $base        $text   $red        $red
+
+# ================================
+# ANIMATIONS (experimental - requires swayfx-git)
+# ================================
+# Stable SwayFX does NOT include window open/close animations yet.
+# They are under development in the open-close-animations branch.
+# To enable animations, build swayfx-git from source.
+# 
+# Once available, uncomment:
+# animation_duration_ms 200
+#
+# Related config if animations are merged:
+# # Window open/close fade
+# # Window movement/resize
+# 
+# See: https://github.com/WillPower3309/swayfx/pull/487
+# See: https://github.com/WillPower3309/swayfx/pull/164

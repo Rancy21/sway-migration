@@ -1,6 +1,6 @@
-# Migration Guide: Omarchy (Arch) → Fedora + Sway
+# Migration Guide: Omarchy (Arch) → Fedora + SwayFX
 
-Complete step-by-step guide for migrating from **Omarchy (Hyprland on Arch Linux)** to **Fedora with Sway**.
+Complete step-by-step guide for migrating from **Omarchy (Hyprland on Arch Linux)** to **Fedora with SwayFX**.
 
 ## Overview
 
@@ -9,6 +9,21 @@ This guide will:
 2. Install Fedora
 3. Set up Sway with your migrated configuration
 4. Restore your workflows and applications
+
+## Phase 0: Why SwayFX?
+
+Hyprland provides animations, rounded corners, and shadows out of the box. Vanilla Sway does not. SwayFX is a drop-in fork of Sway that re-implements the Wayland renderer (fx_renderer on top of scenefx) to support:
+- Rounded window corners (`corner_radius`)
+- Shadows (`shadows`)
+- Blur (`blur`)
+- Dim unfocused windows (`default_dim_inactive`)
+- Animations (open/close and movement, in development)
+
+For Fedora installation, enable the SwayFX COPR:
+```
+sudo dnf copr enable swayfx/swayfx
+sudo dnf install swayfx
+```
 
 ## Phase 1: Backup Your Arch/Omarchy Setup
 

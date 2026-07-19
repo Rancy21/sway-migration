@@ -1,0 +1,52 @@
+# Wallpaper Setup Guide for Sway
+
+## Methods to Set Wallpaper
+
+### Method 1: Single Image (Quickest)
+
+Edit `~/.config/sway/config.d/output`:
+
+```bash
+# Set same wallpaper on all monitors
+output * bg ~/Pictures/wallpaper.jpg fill
+```
+
+### Method 2: Different Wallpaper Per Monitor
+
+```bash
+# Laptop display
+output eDP-1 bg ~/Pictures/laptop_wallpaper.jpg fill
+
+# External monitor
+output HDMI-A-1 bg ~/Pictures/monitor_wallpaper.jpg fill
+```
+
+### Method 3: Random Wallpaper at Startup
+
+Add to `~/.config/sway/config.d/autostart`:
+
+```bash
+# Random wallpaper from directory
+exec_always find ~/Pictures/Wallpapers -type f | shuf -n 1 | xargs swaymsg output '*' bg
+```
+
+### Method 4: Using swaybg (Recommended for Advanced Control)
+
+```bash
+# Install swaybg (if not installed)
+sudo dnf install swaybg
+
+# Basic usage
+swaymsg output '*' bg ~/Pictures/wallpaper.jpg fill
+
+# Different modes:
+# fill    - Scale to cover (default)
+# stretch - Stretch to fit
+# fit     - Scale to fit (may have bars)
+# center  - Center without scaling
+# tile    - Tile/repeat image
+```
+
+## Wallpaper Setup Script
+
+I'll create a helper script for you:

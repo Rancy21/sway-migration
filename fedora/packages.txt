@@ -5,7 +5,11 @@
 # ================================
 # SWAY AND WAYLAND CORE
 # ================================
-sway
+# Use SwayFX instead of vanilla Sway for animations/rounded corners
+# To install: dnf copr enable swayfx/swayfx && dnf install swayfx
+# Or if using main SwayFX repo: dnf copr enable mochaa/swayfx && dnf install swayfx
+# Alternatively: sudo dnf install swayfx (if in Terra repo)
+swayfx
 swaylock
 swayidle
 waybar
